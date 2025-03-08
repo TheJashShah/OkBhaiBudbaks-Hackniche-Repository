@@ -92,10 +92,9 @@ def find_similar_products(id):
 
     similar_products = []
 
-
     for idx, num in enumerate(array):
         if num >= 0.7:
-            similar_products.append({'Name' : data['product_name'][idx], 'ID' : data['product_id'][idx], 'similarity': num, 'image' : data['img_link'][idx]})
+            similar_products.append({'Name' : data['product_name'][idx], 'ID' : data['product_id'][idx], 'similarity': num, 'image' : data['img_link'][idx], 'actual price' : data['actual_price'][idx]})
 
     return similar_products
 
