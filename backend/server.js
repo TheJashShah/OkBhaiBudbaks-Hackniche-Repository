@@ -11,6 +11,7 @@ const app = express();
 // CORS setup
 app.use(cors({
   origin: 'http://localhost:5173', 
+  origin: 'http://localhost:5174', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
 }));
@@ -34,5 +35,5 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
