@@ -4,6 +4,7 @@ import Login from './pages/login'
 import Dashboard from './pages/dashboard'
 import Hero from './pages/hero'
 import Learn from './pages/learn-more'
+import Cart from './pages/cart'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
            <Route path="/dashboard" element={<Dashboard />} />
            <Route path="/" element={<Hero />} />
            <Route path="/learn" element={<Learn />} />
+           <Route path="/cart" element={<Cart />} />
         </Routes>
       </Router>
     </div>
