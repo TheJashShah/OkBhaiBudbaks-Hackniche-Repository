@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
 
 const Dashboard = () => {
+  const [activeTab, setActiveTab] = useState('explore');
   const datanew = [
     { src: 'https://images.unsplash.com/photo-1502657877623-f66bf489d236', title: 'Night view', description: '4.21M views' },
     { src: 'https://images.unsplash.com/photo-1527549993586-dff825b37782', title: 'Lake view', description: '4.74M views' },
@@ -20,15 +21,34 @@ const Dashboard = () => {
         <h1 className="text-xl font-bold text-blue-600 md:block hidden">Best<span className="text-black">BuyCo</span></h1>
         <h1 className="text-xl font-bold text-blue-600 block md:hidden">BB</h1>
         <nav className="mt-6 space-y-4 w-full">
-          <a className="text-gray-700 font-semibold p-2 rounded-lg hover:bg-gray-200 flex items-center justify-center md:justify-start" href="#">
-            <span className="md:hidden">🏬</span>
-            <span className="hidden md:block">Popular Products</span>
-          </a>
-          <a className="bg-blue-600 text-white p-2 rounded-lg flex items-center justify-center md:justify-start" href="#">
-            <span className="md:hidden">🔍</span>
-            <span className="hidden md:block">Explore New</span>
-          </a>
-        </nav>
+               <button
+                 className={`w-full p-2 rounded-lg flex items-center justify-center md:justify-start font-semibold ${
+                   activeTab === 'popular' ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-200'
+                 }`}
+                 onClick={() => setActiveTab('popular')}
+               >
+                 <span className="md:hidden">🏬</span>
+                 <span className="hidden md:block">Popular Products</span>
+               </button>
+               <button
+                 className={`w-full p-2 rounded-lg flex items-center justify-center md:justify-start font-semibold ${
+                   activeTab === 'explore' ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-200'
+                 }`}
+                 onClick={() => setActiveTab('explore')}
+               >
+                 <span className="md:hidden">🔍</span>
+                 <span className="hidden md:block">Explore New</span>
+               </button>
+               <button
+                 className={`w-full p-2 rounded-lg flex items-center justify-center md:justify-start font-semibold ${
+                   activeTab === 'foryou' ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-200'
+                 }`}
+                 onClick={() => setActiveTab('foryou')}
+               >
+                 <span className="md:hidden">🔍</span>
+                 <span className="hidden md:block">For You</span>
+                </button>
+             </nav>
       </aside>
 
       {/* Main Content */}
@@ -39,10 +59,8 @@ const Dashboard = () => {
           <input className="w-[200px] md:w-full max-w-xs h-10 m-2 rounded-full bg-gradient-to-br from-blue-50 to-slate-100 text-center" placeholder="Search..." />
         </div>
 
-        {/* Product Grid - Hidden when "Popular Products" or "For You" is selected */}
         <div className="w-full h-full bg-gradient-to-br from-blue-50 to-slate-100">
-          {(activeTab === 'explore') && (
-
+        {(activeTab === 'explore') && (      
             <Box
               sx={{
                 marginLeft: '10px',
@@ -50,9 +68,9 @@ const Dashboard = () => {
                 gap: 1,
                 py: 1,
                 overflow: 'auto',
-                width: 'auto',
+                width: '85vw',
                 '@media (max-width: 600px)': {
-                  width: '70vw',
+                  width: '80vw',
                 },
                 height: 'auto',
                 scrollSnapType: 'x mandatory',
@@ -77,8 +95,7 @@ const Dashboard = () => {
                       width: 120,
                       padding: 1,
                     },
-                  }}
-                >
+                  }}>
                   <AspectRatio
                     ratio="1"
                     sx={{
@@ -90,14 +107,12 @@ const Dashboard = () => {
                         height: 100,
                         p: 0.5,
                       },
-                    }}
-                  >
+                    }}>
                     <img
                       srcSet={`${item.src}?h=300&fit=crop&auto=format&dpr=2 2x`}
                       src={`${item.src}?h=300&fit=crop&auto=format`}
                       alt={item.title}
-                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                    />
+                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}/>
                   </AspectRatio>
                   <Box sx={{ mt: 1, width: '100%' }}>
                     <Typography level="title-md">{item.title}</Typography>
@@ -106,7 +121,7 @@ const Dashboard = () => {
                 </Card>
               ))}
             </Box>
-          )}
+        )}
         </div>
       </div>
     </div>
