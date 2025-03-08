@@ -222,6 +222,7 @@ export const products: Product[] = [
 
 
 const Dashboard = () => {
+  const [extraFilter,setExtraFilter] = useState('');
   const [activeTab, setActiveTab] = useState('explore');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -322,54 +323,118 @@ const Dashboard = () => {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Navbar */}
         <div className="bg-white p-4 shadow-sm flex items-center justify-between border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-800">
-            {activeTab === 'explore' && 'Explore Products'}
-            {activeTab === 'popular' && 'Popular Products'}
-            {activeTab === 'foryou' && 'Recommended For You'}
-          </h2>
-          
-          <div className="relative max-w-md w-full hidden md:block">
-            <input 
-              type="text" 
-              className="w-full h-10 pl-10 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <button className="relative p-2 rounded-full hover:bg-gray-100">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-              <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
-            </button>
-            
-            <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
-              JD
-            </div>
-          </div>
-        </div>
+  <h2 className="text-xl font-bold text-gray-800">
+    {activeTab === "explore" && "Explore Products"}
+    {activeTab === "popular" && "Popular Products"}
+    {activeTab === "foryou" && "Recommended For You"}
+  </h2>
 
-        {/* Search bar for mobile */}
-        <div className="p-4 bg-white border-b border-gray-200 md:hidden">
-          <div className="relative">
-            <input 
-              type="text" 
-              className="w-full h-10 pl-10 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-        </div>
+  {/* Search & Additional Input (Desktop) */}
+  <div className="relative w-full max-w-xl hidden md:flex items-center space-x-3">
+    {/* Search Input */}
+    <div className="relative flex-1">
+      <input
+        type="text"
+        className="w-full h-10 pl-12 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        placeholder="Search products..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5 text-gray-400 absolute left-4 top-2.5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        />
+      </svg>
+    </div>
+
+    {/* Additional Input */}
+    <div className="relative flex-1">
+    <input
+      type="text"
+      className="w-full h-10 px-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      placeholder="Smart Search"
+      value={extraFilter}
+      onChange={(e) => setExtraFilter(e.target.value)}
+    />
+    </div>
+  </div>
+
+  {/* Icons */}
+  <div className="flex items-center space-x-4">
+    <button className="relative p-2 rounded-full hover:bg-gray-100">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6 text-gray-600"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+        />
+      </svg>
+      <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
+        3
+      </span>
+    </button>
+
+    <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
+      JD
+    </div>
+  </div>
+</div>
+
+{/* Mobile Search & Additional Input */}
+<div className="p-4 bg-white border-b border-gray-200 md:hidden">
+  <div className="flex flex-col space-y-2">
+    {/* Search Input */}
+    <div className="relative">
+      <input
+        type="text"
+        className="w-full h-10 pl-10 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        placeholder="Search products..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5 text-gray-400 absolute left-3 top-2.5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        />
+      </svg>
+    </div>
+
+    {/* Additional Input */}
+    <input
+      type="text"
+      className="w-full h-10 px-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      placeholder="Smart Search"
+      value={extraFilter}
+      onChange={(e) => setExtraFilter(e.target.value)}
+    />
+  </div>
+</div>
+
 
         {/* Content Area */}
         <div className="flex-1 overflow-y-auto bg-gray-50 p-4 md:p-6">

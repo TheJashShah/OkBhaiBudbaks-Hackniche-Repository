@@ -4,7 +4,7 @@ from first import find_by_keyword, find_for_keywords, find_for_multiple, find_si
 app = Flask(__name__)
 
 @app.route("/searchkeyword", methods=["POST"])
-def search():
+def search(): 
 
     try:
         data = request.get_json()
