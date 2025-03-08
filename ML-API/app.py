@@ -33,7 +33,7 @@ def query():
             return jsonify({"error" : "Missing 'keyword' key in request"}), 400
         
         result = find_by_sentence(sentence, top=10)
-        return jsonify({"search" : result})
+        return jsonify({"predict" : result})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
