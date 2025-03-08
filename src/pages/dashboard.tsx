@@ -227,6 +227,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('explore');
   const [searchQuery, setSearchQuery] = useState('');
   const [popular, setPopular] = useState<any[]>([]);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -256,7 +257,49 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
-  // Filter products based on search query
+  const handleAddToCart = async (name: string, price: number) => {
+    console.log(`Adding to cart: ${name} - $${price}`);
+    try {
+      // Send POST request with title and price
+      const response = await axios.post('http://localhost:3000/api/session/add-cart', {
+        name,
+        price,
+      });
+      // Handle success message display
+      const successMessage = document.getElementById("success-message");
+      if (successMessage) {
+        successMessage.classList.remove("opacity-0");
+        successMessage.classList.add("opacity-100");
+  
+        // Hide message after 3 seconds
+        setTimeout(() => {
+          successMessage.classList.remove("opacity-100");
+          successMessage.classList.add("opacity-0");
+        }, 3000);
+      }
+  
+      // Log success response from backend
+      console.log('Item added to cart:', response.data);
+  
+    } catch (error: any) {
+      // If error occurs, log it and display a user-friendly message
+      console.error('Error adding item to cart:', error.response ? error.response.data : error.message);
+  
+      // Optionally, show an error message to the user
+      const errorMessage = document.getElementById("error-message");
+      if (errorMessage) {
+        errorMessage.classList.remove("opacity-0");
+        errorMessage.classList.add("opacity-100");
+  
+        // Hide error message after 3 seconds
+        setTimeout(() => {
+          errorMessage.classList.remove("opacity-100");
+          errorMessage.classList.add("opacity-0");
+        }, 3000);
+      }
+    }
+  }
+  
   const filteredProducts = products.filter(product => 
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -268,7 +311,23 @@ const Dashboard = () => {
   const recommendedProducts = [...products].sort(() => 0.5 - Math.random()).slice(0, 6);
 
   return (
+    
     <div className="flex h-screen w-screen overflow-hidden bg-gray-50">
+      <div
+        id="success-message"
+        className="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded z-50 transition-opacity duration-300 opacity-0"
+      >
+        <div className="flex items-center">
+          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fillRule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clipRule="evenodd"
+            ></path>
+          </svg>
+          <span>Added to cart successfully!</span>
+        </div>
+      </div>
       {/* Sidebar */}
       <aside className="w-20 md:w-64 bg-white p-4 md:p-6 shadow-lg flex flex-col items-center md:items-start border-r border-gray-200 z-10">
         <div className="flex items-center justify-center md:justify-start w-full">
@@ -553,7 +612,6 @@ const Dashboard = () => {
                   }}
                   className="pb-4">
                   {featuredProducts.map((product) => (
-                    <Link to={`/product/${product.id}`} key={product.id} className="group">
                       <Card
                         variant="outlined"
                         sx={{
@@ -596,11 +654,9 @@ const Dashboard = () => {
                           <Typography level="title-lg" className="font-bold text-blue-600">
                             ${product.price.toFixed(2)}
                           </Typography>
-                          <button className="flex-1 my-4 bg-blue-600 text-white py-4 px-5 rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-center">Add to Cart</button>
+                          <button className="flex-1 my-4 bg-blue-600 text-white py-4 px-5 rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-center" onClick={async () => {await handleAddToCart(product.title, parseFloat(product.price.toFixed(2)));}}>Add to Cart</button>
                         </Box>
                       </Card>
-                      
-                    </Link>
                   ))}
                 </Box>
               </div>
