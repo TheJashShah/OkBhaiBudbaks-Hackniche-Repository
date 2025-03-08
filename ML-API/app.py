@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence
+from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence, url_to_products
 
 app = Flask(__name__)
 
@@ -63,6 +63,23 @@ def top():
             return jsonify({"error" : 'No List Found'}), 400
 
         return jsonify({"top-products" : top_list})
+    
+    except Exception as e:
+        return jsonify({"error" : str(e)}), 500
+    
+@app.route("/imagesearch", methods=["POST"])
+def img():
+
+    try:
+        data = request.get_json()
+        img = data.get("url")
+
+        if img is None:
+            return jsonify({"error" : "Missing 'url' in request"}), 400
+
+        list = url_to_products(img)
+
+        return jsonify({"products" : list})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
