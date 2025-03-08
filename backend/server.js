@@ -10,8 +10,14 @@ const app = express();
 
 // CORS setup
 app.use(cors({
-  origin: 'http://localhost:5173', 
-  origin: 'http://localhost:5174', 
+  origin: (origin, callback) => {
+    const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
 }));
