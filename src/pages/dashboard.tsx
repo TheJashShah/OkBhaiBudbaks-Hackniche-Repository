@@ -231,8 +231,12 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:5000/topproducts");
+        console.log(response);
         if (response.data && typeof response.data === "string") {
-          const parsedData = JSON.parse(response.data); 
+          console.log("here");
+          const sanitizedData = response.data.replace(/NaN/g, 'null').replace(/Infinity/g, 'null');
+          const parsedData = JSON.parse(sanitizedData);
+          console.log(parsedData);
           if (parsedData["top-products"] && Array.isArray(parsedData["top-products"])) {
             console.log("✅ API Response:", parsedData["top-products"]);
             setPopular(parsedData["top-products"]); // Set the 'top-products' array
