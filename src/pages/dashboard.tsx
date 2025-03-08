@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import AspectRatio from '@mui/joy/AspectRatio';
 import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
 import Card from '@mui/joy/Card';
 import { Link } from 'react-router-dom';
-//import { products } from '../data/products';
+import axios from 'axios';
 
 export interface Product {
   id: number;
@@ -222,10 +222,31 @@ export const products: Product[] = [
 
 
 const Dashboard = () => {
+
   const [extraFilter,setExtraFilter] = useState('');
   const [activeTab, setActiveTab] = useState('explore');
   const [searchQuery, setSearchQuery] = useState('');
-
+  const [popular, setPopular] = useState<any[]>([]);
+  useEffect(() => 
+  {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:5000/topproducts");
+      
+        if (response.data && Array.isArray(response.data["top-products"])) {
+          console.log("✅ API Response:", response.data["top-products"]);
+          setPopular(response.data["top-products"]); // Extract the correct array
+        } else {
+          console.warn("⚠️ Unexpected API response format:", response.data);
+          setPopular([]); // Default to an empty array if unexpected format
+        }
+      } catch (error) {
+        console.error("❌ Error fetching data:", error);
+      }
+      
+    }
+    fetchData();
+  },[]);
   // Filter products based on search query
   const filteredProducts = products.filter(product => 
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -233,9 +254,6 @@ const Dashboard = () => {
 
   // Get featured products (first 6)
   const featuredProducts = products.slice(0, 6);
-  
-  // Get popular products (sorted by rating)
-  const popularProducts = [...products].sort((a, b) => b.rating - a.rating).slice(0, 6);
   
   // Get recommended products (could be based on user preferences, using random for demo)
   const recommendedProducts = [...products].sort(() => 0.5 - Math.random()).slice(0, 6);
@@ -713,8 +731,8 @@ const Dashboard = () => {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Popular Products</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {popularProducts.map((product) => (
-                  <Link to={`/product/${product.id}`} key={product.id} className="group">
+              {popular.map((product, index) => (
+                <Link to={`/product/${product.ID}`} key={`${product.ID}-${index}`} className="group">
                     <Card
                       variant="outlined"
                       className="h-full transition-all duration-200 hover:shadow-md group-hover:border-blue-300"
@@ -732,7 +750,7 @@ const Dashboard = () => {
                       <AspectRatio ratio="1" sx={{ width: '100%' }}>
                         <img
                           src={product.image || "/placeholder.svg"}
-                          alt={product.title}
+                          alt={product.name}
                           className="object-contain p-4"
                         />
                       </AspectRatio>
@@ -741,35 +759,23 @@ const Dashboard = () => {
                           Popular
                         </div>
                         <Typography level="title-md" className="line-clamp-2 mb-1 group-hover:text-blue-600 transition-colors">
-                          {product.title}
+                          {product.name}
                         </Typography>
                         <div className="flex items-center mb-1">
                           {[...Array(5)].map((_, i) => (
                             <svg 
                               key={i} 
                               xmlns="http://www.w3.org/2000/svg" 
-                              className={`h-4 w-4 ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`} 
+                              className={`h-4 w-4 ${i < Math.floor(product.Rating) ? 'text-yellow-400' : 'text-gray-300'}`} 
                               viewBox="0 0 20 20" 
                               fill="currentColor"
                             >
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
                           ))}
-                          <span className="text-xs text-gray-500 ml-1">({product.rating})</span>
+                          <span className="text-xs text-gray-500 ml-1">({product.Rating})</span>
                         </div>
-                        <Typography level="body-sm" className="text-gray-500 mb-2">
-                          {product.category}
-                        </Typography>
-                        <div className="mt-auto flex items-center justify-between">
-                          <Typography level="title-lg" className="font-bold text-blue-600">
-                            ${product.price.toFixed(2)}
-                          </Typography>
-                          <button className="p-1.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                            </svg>
-                          </button>
-                        </div>
+                        
                       </Box>
                     </Card>
                   </Link>
