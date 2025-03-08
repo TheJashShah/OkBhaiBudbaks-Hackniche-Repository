@@ -1,10 +1,22 @@
 import express from 'express';
 import dotenv from 'dotenv'; 
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
+import cors from "cors";
 const check = dotenv.config({ path: './backend/.env' });
 const app = express();
 app.use(express.json());
+app.use(cors({
+    origin: (origin, callback) => {
+      const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+  }));
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 async function generateContentFromModel(prompt) {
     try {
