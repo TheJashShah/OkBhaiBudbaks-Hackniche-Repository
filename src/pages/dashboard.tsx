@@ -274,6 +274,7 @@ const Dashboard = () => {
     try {
       if (isSingleWord) {
         const response = await axios.post("http://127.0.0.1:5000/searchkeyword", {
+<<<<<<< Updated upstream
           keyword: extraFilter,
         });
     
@@ -311,6 +312,22 @@ const Dashboard = () => {
     } catch (error: any) {
       console.error('Error:', error.response ? error.response.data : error.message);
     }
+=======
+          keyword: extraFilter, // Sending the extraFilter as the keyword
+        });
+        setSearched(response.data); 
+        console.log(searched);
+      } else {
+        const response = await axios.post("http://127.0.0.1:5000/searchquery", {
+          sentence: extraFilter, // Sending the extraFilter as the sentence
+        });
+        setSearched(response.data); 
+        console.log(searched);
+      }
+    } catch (error: any) {
+      console.error('Error:', error.response ? error.response.data : error.message);
+    }        
+>>>>>>> Stashed changes
   }
   const handleAddToCart = async (name: string, price: number) => {
     console.log(`Adding to cart: ${name} - $${price}`);
