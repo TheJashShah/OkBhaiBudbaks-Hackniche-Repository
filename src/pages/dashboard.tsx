@@ -70,7 +70,7 @@ const Dashboard = () => {
                 overflow: 'auto',
                 width: '85vw',
                 '@media (max-width: 600px)': {
-                  width: '80vw',
+                  width: 'w-[calc(100vw-20px)]',
                 },
                 height: 'auto',
                 scrollSnapType: 'x mandatory',
