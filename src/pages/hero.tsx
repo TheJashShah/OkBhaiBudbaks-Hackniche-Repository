@@ -14,7 +14,7 @@ export default function LandingPage() {
       <header className="absolute inset-x-0 top-0 z-50">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="/" className="text-xl font-bold text-indigo-600">
+            <a href="/" className="text-xl font-bold text-blue-600">
               ShopMart
             </a>
           </div>
@@ -42,7 +42,7 @@ export default function LandingPage() {
         {mobileMenuOpen && (
           <div className="fixed inset-0 z-50 bg-white p-6">
             <div className="flex items-center justify-between">
-              <a href="/" className="text-xl font-bold text-indigo-600">
+              <a href="/" className="text-xl font-bold text-blue-600">
                 ShopMart
               </a>
               <button onClick={() => setMobileMenuOpen(false)} className="text-gray-700 p-2">✕
@@ -74,7 +74,7 @@ export default function LandingPage() {
           <div className="mt-10 flex justify-center gap-x-6">
             <a
               href="/dashboard"
-              className="rounded-md bg-indigo-600 px-5 py-3 text-white text-lg font-semibold shadow-lg hover:bg-indigo-500">
+              className="rounded-md bg-blue-600 px-5 py-3 text-white text-lg font-semibold shadow-lg hover:bg-blue-500">
               Start Shopping
             </a>
             <a href="#" className="text-lg font-semibold text-gray-900">
