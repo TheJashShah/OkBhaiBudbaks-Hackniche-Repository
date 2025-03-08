@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { useState, useEffect } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
@@ -19,7 +17,6 @@ const ProductDetail = () => {
   const [activeImage, setActiveImage] = useState(0)
   const { addToCart } = useCart()
 
-  // Mock additional product images
   const productImages = [
     product?.image,
     "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
@@ -28,7 +25,6 @@ const ProductDetail = () => {
   ].filter(Boolean)
 
   useEffect(() => {
-    // Find product by ID
     const foundProduct = products.find((p) => p.id === Number(id))
 
     if (foundProduct) {
@@ -50,13 +46,11 @@ const ProductDetail = () => {
         quantity,
       })
 
-      // Show success message
       const successMessage = document.getElementById("success-message")
       if (successMessage) {
         successMessage.classList.remove("opacity-0")
         successMessage.classList.add("opacity-100")
 
-        // Hide message after 3 seconds
         setTimeout(() => {
           successMessage.classList.remove("opacity-100")
           successMessage.classList.add("opacity-0")
@@ -80,20 +74,17 @@ const ProductDetail = () => {
         <p className="text-gray-600 mb-6">The product you're looking for doesn't exist or has been removed.</p>
         <button
           onClick={() => navigate("/")}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
           Return to Home
         </button>
       </div>
     )
   }
 
-  // Find related products (same category)
   const relatedProducts = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4)
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      {/* Navigation */}
       <nav className="bg-white border-b border-gray-200 px-4 py-2.5 sticky top-0 z-10">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
@@ -109,14 +100,12 @@ const ProductDetail = () => {
                 className="h-6 w-6 text-gray-600"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+                stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
               </svg>
             </Link>
             <Link to="/profile" className="p-2 rounded-full hover:bg-gray-100">
@@ -125,21 +114,18 @@ const ProductDetail = () => {
                 className="h-6 w-6 text-gray-600"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+                stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
               </svg>
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* Breadcrumbs */}
       <div className="max-w-screen-xl mx-auto px-4 py-2 text-sm text-gray-500">
         <Link to="/" className="hover:text-blue-600">
           Home
@@ -152,11 +138,9 @@ const ProductDetail = () => {
         <span className="text-gray-700">{product.title}</span>
       </div>
 
-      {/* Success Message */}
       <div
         id="success-message"
-        className="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded z-50 transition-opacity duration-300 opacity-0"
-      >
+        className="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded z-50 transition-opacity duration-300 opacity-0">
         <div className="flex items-center">
           <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
             <path
@@ -169,11 +153,9 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      {/* Product Detail */}
       <div className="max-w-screen-xl mx-auto px-4 py-8">
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
-            {/* Product Images */}
             <div className="space-y-4">
               <AspectRatio ratio="1.1" sx={{ width: "100%", borderRadius: "8px", overflow: "hidden" }}>
                 <img
@@ -190,21 +172,18 @@ const ProductDetail = () => {
                     onClick={() => setActiveImage(index)}
                     className={`flex-shrink-0 border-2 rounded-md overflow-hidden ${
                       activeImage === index ? "border-blue-600" : "border-gray-200"
-                    }`}
-                  >
+                    }`}>
                     <AspectRatio ratio="1" sx={{ width: "50px" }}>
                       <img
                         src={image || "/placeholder.svg"}
                         alt={`${product.title} thumbnail ${index + 1}`}
-                        className="object-contain bg-white p-2"
-                      />
+                        className="object-contain bg-white p-2"/>
                     </AspectRatio>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Product Info */}
             <div className="space-y-6">
               <div>
                 <Typography level="title-lg" className="text-3xl font-bold text-gray-900">
@@ -370,8 +349,7 @@ const ProductDetail = () => {
                         borderColor: "primary.main",
                         boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
                       },
-                    }}
-                  >
+                    }}>
                     <AspectRatio ratio="1" sx={{ width: "100%" }}>
                       <img
                         src={relatedProduct.image || "/placeholder.svg"}

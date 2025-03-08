@@ -70,11 +70,8 @@ export default function Login() {
                     onChange={(e) => setFullName(e.target.value)}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                     placeholder="Enter your name"
-                    required
-                  />
+                    required/>
                 </div>
-
-                {/* Email Field */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Email
@@ -90,7 +87,6 @@ export default function Login() {
                   />
                 </div>
 
-                {/* Password Field */}
                 <div>
                   <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                     Password
@@ -103,8 +99,7 @@ export default function Login() {
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                       placeholder="Enter your password"
-                      required
-                    />
+                      required/>
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
@@ -133,8 +128,7 @@ export default function Login() {
                           stroke="currentColor"
                           strokeWidth="2"
                           strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
+                          strokeLinejoin="round">
                           <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                           <circle cx="12" cy="12" r="3"></circle>
                         </svg>
@@ -155,11 +149,9 @@ export default function Login() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                     placeholder="••••••••"
-                    required
-                  />
+                    required/>
                 </div>
 
-                {/* Signup Button */}
                 <button
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
@@ -190,7 +182,6 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Social Signup */}
             <div className="grid gap-4">
               <button
                 type="button"
@@ -214,7 +205,6 @@ export default function Login() {
               </button>
             </div>
 
-            {/* Login Link */}
             <p className="text-center text-sm text-gray-600 mt-6">
               Already have an account?{" "}
               <Link to="/login" className="text-blue-600 hover:text-blue-800 hover:underline font-medium">
