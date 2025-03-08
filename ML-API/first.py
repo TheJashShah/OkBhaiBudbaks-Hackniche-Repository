@@ -9,6 +9,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 import random
 from language_querying import string_to_tokens
 
+from image_caption import caption_img
+
 '''
 Index(['product_id', 'product_name', 'category', 'discounted_price',
        'actual_price', 'discount_percentage', 'rating', 'rating_count',
@@ -17,7 +19,7 @@ Index(['product_id', 'product_name', 'category', 'discounted_price',
       dtype='object')
 '''
 
-data = pd.read_csv('try.csv')
+data = pd.read_csv('final_updated.csv')
 
 # print(data.columns)
 def clean_text(text):
@@ -39,7 +41,10 @@ data['rating'] = pd.to_numeric(data['rating'], errors='coerce')
 data['rating_count'] = data['rating_count'].str.replace(",", "").astype(float)
 data['discount_percentage'] = data['discount_percentage'].apply(convert_float)
 
-data['rating'] = data['rating'].apply(lambda x: random.uniform(2.4, 4.7) if pd.isna(x) else x)
+data['actual_price'] = data['actual_price'].replace(["", "nan", "NaN"], np.nan)
+data['actual_price'] = data['actual_price'].apply(
+    lambda x: random.randint(5000, 45000) if pd.isna(x) else x
+)
 
 def top_products():
 
@@ -79,7 +84,7 @@ for i in range(data.shape[0]):
     array = similarity_matrix[i].tolist()
     map[data['product_id'][i]] = array
 
-# print(map)
+
 
 def find_similar_products(id):
 
@@ -87,16 +92,12 @@ def find_similar_products(id):
 
     similar_products = []
 
-    # print("Product Entered is: ", data.query("product_id==@id")['product_name'])
 
     for idx, num in enumerate(array):
         if num >= 0.7:
             similar_products.append({'Name' : data['product_name'][idx], 'ID' : data['product_id'][idx], 'similarity': num, 'image' : data['img_link'][idx]})
 
     return similar_products
-
-# with open('similar.json', 'w') as file:
-#     json.dump(find_similar_products('B07JW9H4J1'), file, indent=4)
 
 def find_for_multiple(id_list):
     
@@ -148,11 +149,11 @@ def find_by_sentence(sentence, top):
         return "No products found."
 
     if condition == "above" and nums:
-        all_results = [item for item in all_results if item["price"] > nums[0]]
+        all_results = [item for item in all_results if item["price"] > int(nums[0])]
     elif condition == "below" and nums:
-        all_results = [item for item in all_results if item["price"] < nums[0]]
+        all_results = [item for item in all_results if item["price"] < int(nums[0])]
     elif condition == "range" and len(nums) == 2:
-        all_results = [item for item in all_results if nums[0] <= item["price"] <= nums[1]]
+        all_results = [item for item in all_results if int(nums[0]) <= item["price"] <= int(nums[1])]
 
     all_results.sort(key=lambda x: x["Rating"], reverse=True)
 
@@ -172,4 +173,8 @@ def find_for_keywords(keyword_list):
         
         return find_for_multiple(list(product_ids))
     
-print(find_by_sentence("Phone in range 20000 to 40000", 5))
+def url_to_products(url):
+
+    word_list = caption_img(url)
+    return find_for_keywords(word_list)
+    

@@ -66,6 +66,23 @@ def top():
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
+    
+@app.route("/imagesearch", methods=["POST"])
+def img():
+
+    try:
+        data = request.get_json()
+        img = data.get("url")
+
+        if img is None:
+            return jsonify({"error" : "Missing 'url' in request"}), 400
+
+        list = url_to_products(img)
+
+        return jsonify({"products" : list})
+    
+    except Exception as e:
+        return jsonify({"error" : str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

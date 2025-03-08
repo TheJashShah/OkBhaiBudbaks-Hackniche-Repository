@@ -36,6 +36,4 @@ def caption_img(url):
         if tag in ['NN', 'NNS', 'NNPS', 'NNP']:
             word_list.append(word)
 
-    print(word_list)
-
-caption_img('https://stripedspatula.com/wp-content/uploads/2020/12/chocolate-peanut-butter-chip-cookies-4.jpg')
+    return word_list
