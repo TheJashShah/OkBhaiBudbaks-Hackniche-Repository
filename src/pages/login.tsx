@@ -36,13 +36,22 @@ export default function Signup() {
       console.log("Login successful:", data);
       alert("Login successful!");
 
-      // Save token (if rememberMe is checked)
-      if (rememberMe) {
-        localStorage.setItem("token", data.token);
-      } else {
-        sessionStorage.setItem("token", data.token);
-      }
-      navigate("/userdetails");
+      const sessionResponse = await fetch("http://localhost:3000/api/session/start-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    const sessionData = await sessionResponse.json();
+
+    if (!sessionResponse.ok) {
+      console.log("Session start failed:", sessionData.message);
+      throw new Error(sessionData.message || "Session start failed");
+    }
+
+    console.log("Session started successfully:", sessionData);
+
+    navigate("/dashboard");
 
     } catch (err: any) {
       console.error("Login error:", err.message);

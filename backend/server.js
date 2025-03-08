@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import auth from "./routes/auth.js";
 import User from "./routes/user.js";
+import session from "./routes/session.js"
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 
 app.use('/api/auth', auth);
+app.use('/api/session', session);
 app.use('/', User);
 
 app.use((err, req, res, next) => {
