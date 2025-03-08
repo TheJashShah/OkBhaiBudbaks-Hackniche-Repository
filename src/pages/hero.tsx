@@ -77,7 +77,7 @@ export default function LandingPage() {
               className="rounded-md bg-indigo-600 px-5 py-3 text-white text-lg font-semibold shadow-lg hover:bg-indigo-500">
               Start Shopping
             </a>
-            <a href="#" className="text-lg font-semibold text-gray-900">
+            <a href="/learn" className="text-lg font-semibold text-gray-900">
               Learn more →
             </a>
           </div>

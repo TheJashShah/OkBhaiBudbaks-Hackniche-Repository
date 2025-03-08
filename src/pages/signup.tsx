@@ -27,15 +27,12 @@ export default function Login() {
           </div>
         </div>
 
-        {/* Signup Card */}
         <div className="bg-white rounded-xl shadow-xl overflow-hidden">
           <div className="p-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Create an account</h2>
-            <p className="text-gray-500 mb-6">Enter your information to get started with ShopMart</p>
 
             <form onSubmit={handleSubmit}>
               <div className="space-y-5">
-                {/* Full Name Field */}
                 <div>
                   <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
                     Full Name
