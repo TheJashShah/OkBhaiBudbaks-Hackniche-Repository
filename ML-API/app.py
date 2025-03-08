@@ -17,7 +17,7 @@ def search():
         
         prediction = find_by_keyword(keyword, top=5)
 
-        return jsonify({"search" : prediction})
+        return jsonify({"predict" : prediction})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
