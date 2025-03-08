@@ -3,16 +3,53 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 export default function Signup() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle login logic here
-    console.log({ email, password, rememberMe })
-  }
+  const [showPassword, setShowPassword] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    
+    console.log("🔹 Sending login request:", { email, password, rememberMe });
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        console.log("❌ Login failed:", data.message);
+        throw new Error(data.message || "Login failed");
+      }
+
+      console.log("✅ Login successful:", data);
+      alert("Login successful!");
+
+      // Save token (if rememberMe is checked)
+      if (rememberMe) {
+        localStorage.setItem("token", data.token);
+      } else {
+        sessionStorage.setItem("token", data.token);
+      }
+
+    } catch (err: any) {
+      console.error("🚨 Login error:", err.message);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-slate-100 p-4">
@@ -117,7 +154,7 @@ export default function Signup() {
                 {/* Login Button */}
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center" onClick={handleSubmit}>
                   Login
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
