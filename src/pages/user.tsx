@@ -31,11 +31,10 @@ export default function Dashboard() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      {/* Header */}
       <header className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-indigo-600">User Dashboard</h1>
-          <a href="/shop" className="text-lg font-semibold text-indigo-600 hover:underline">
+          <h1 className="text-2xl font-bold text-blue-600">User Dashboard</h1>
+          <a href="/dashboard" className="text-lg font-semibold text-blue-600 hover:underline">
             Continue Shopping →
           </a>
         </div>
@@ -48,7 +47,7 @@ export default function Dashboard() {
             <p className="text-gray-600 mt-1">Here's your latest activity on ShopMart.</p>
           </div>
           <div className="text-center bg-indigo-100 px-6 py-3 rounded-lg shadow-md">
-            <h3 className="text-lg font-semibold text-indigo-600">Loyalty Points</h3>
+            <h3 className="text-lg font-semibold text-blue-600">Loyalty Points</h3>
             <p className="text-xl font-bold text-gray-900">{loyaltyPoints}</p>
           </div>
         </div>
@@ -84,14 +83,13 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {recommendations.map((item) => (
               <div key={item.id} className="bg-white p-4 rounded-lg shadow-md flex items-center space-x-4">
-                <img src={item.image} alt={item.name} className="w-16 h-16 rounded-lg object-cover" />
                 <div>
                   <h4 className="text-lg font-semibold text-gray-800">{item.name}</h4>
                   <p className="text-gray-600">${item.price.toFixed(2)}</p>
                 </div>
                 <a
                   href="/shop"
-                  className="ml-auto px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-500">View
+                  className="ml-auto px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-500">View
                 </a>
               </div>
             ))}

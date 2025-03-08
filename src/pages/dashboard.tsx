@@ -15,8 +15,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden">
-      {/* Sidebar */}
+    <div className="flex h-screen w-screen">
       <aside className="w-20 md:w-64 bg-white p-6 shadow-lg flex flex-col items-center md:items-start">
         <h1 className="text-xl font-bold text-blue-600 md:block hidden">Best<span className="text-black">BuyCo</span></h1>
         <h1 className="text-xl font-bold text-blue-600 block md:hidden">BB</h1>
@@ -40,69 +39,74 @@ const Dashboard = () => {
           <input className="w-[200px] md:w-full max-w-xs h-10 m-2 rounded-full bg-gradient-to-br from-blue-50 to-slate-100 text-center" placeholder="Search..." />
         </div>
 
-        {/* Product Grid */}
-        <div className="w-[85vw] h-full bg-gradient-to-br from-blue-50 to-slate-100 overflow-hidden">
-          <Box
-            sx={{
-              marginLeft: '10px',
-              display: 'flex',
-              gap: 1,
-              py: 1,
-              overflowX: 'auto',
-              maxWidth: '100vw',
-              flexWrap: 'nowrap',
-              scrollSnapType: 'x mandatory',
-              paddingRight: '30px', // Fix for last image cutoff
-              '& > *': { scrollSnapAlign: 'center' },
-              '::-webkit-scrollbar': { display: 'none' },
-            }}
-          >
-            {datanew.map((item, index) => (
-              <Card
-                key={index}
-                variant="outlined"
-                sx={{
-                  minWidth: 250,
-                  maxWidth: 250,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  padding: 2,
-                  overflow: 'hidden',
-                  '@media (max-width: 600px)': {
-                    minWidth: 140,
-                    maxWidth: 140,
-                    padding: 1,
-                  },
-                }}
-              >
-                <AspectRatio
-                  ratio="1"
+        {/* Product Grid - Hidden when "Popular Products" or "For You" is selected */}
+        <div className="w-full h-full bg-gradient-to-br from-blue-50 to-slate-100">
+          {(activeTab === 'explore') && (
+
+            <Box
+              sx={{
+                marginLeft: '10px',
+                display: 'flex',
+                gap: 1,
+                py: 1,
+                overflow: 'auto',
+                width: 'auto',
+                '@media (max-width: 600px)': {
+                  width: '70vw',
+                },
+                height: 'auto',
+                scrollSnapType: 'x mandatory',
+                '& > *': {
+                  scrollSnapAlign: 'center',
+                },
+                '::-webkit-scrollbar': { display: 'none' },
+              }}
+            >
+              {datanew.map((item) => (
+                <Card
+                  key={item.title}
+                  variant="outlined"
                   sx={{
-                    width: '100%',
-                    height: 'auto',
-                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    padding: 2,
+                    width: 300,
+                    '@media (max-width: 600px)': {
+                      width: 120,
+                      padding: 1,
+                    },
                   }}
                 >
-                  <img
-                    src={`${item.src}?h=300&fit=crop&auto=format`}
-                    alt={item.title}
-                    style={{
-                      objectFit: 'cover',
-                      width: '100%',
-                      height: '100%',
-                      borderRadius: '8px',
+                  <AspectRatio
+                    ratio="1"
+                    sx={{
+                      width: 300,
+                      height: 300,
+                      p: 1,
+                      '@media (max-width: 600px)': {
+                        width: 100,
+                        height: 100,
+                        p: 0.5,
+                      },
                     }}
-                  />
-                </AspectRatio>
-                <Box sx={{ mt: 1, width: '100%' }}>
-                  <Typography level="title-md">{item.title}</Typography>
-                  <Typography level="body-sm">{item.description}</Typography>
-                </Box>
-              </Card>
-            ))}
-          </Box>
+                  >
+                    <img
+                      srcSet={`${item.src}?h=300&fit=crop&auto=format&dpr=2 2x`}
+                      src={`${item.src}?h=300&fit=crop&auto=format`}
+                      alt={item.title}
+                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                    />
+                  </AspectRatio>
+                  <Box sx={{ mt: 1, width: '100%' }}>
+                    <Typography level="title-md">{item.title}</Typography>
+                    <Typography level="body-sm">{item.description}</Typography>
+                  </Box>
+                </Card>
+              ))}
+            </Box>
+          )}
         </div>
       </div>
     </div>
