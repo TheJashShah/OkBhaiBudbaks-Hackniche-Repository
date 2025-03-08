@@ -8,27 +8,51 @@ const router = express.Router();
 // Signup Route
 router.post("/signup", async (req, res) => {
   try {
-    const { fullName, email, password } = req.body;
+    const { username, email, password } = req.body;
+    console.log("🔹 Received signup request:", { username, email });
+
+    // Validate input
+    if (!username || !email || !password) {
+      console.log("⚠️ Missing required fields");
+      return res.status(400).json({ message: "All fields are required" });
+    }
 
     // Check if user exists
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: "Email already exists" });
+    if (existingUser) {
+      console.log("⚠️ User already exists:", email);
+      return res.status(400).json({ message: "Email already registered" });
+    }
 
     // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("✅ Password hashed successfully");
 
     // Create user
-    const newUser = new User({ fullName, email, password: hashedPassword });
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
+    console.log("✅ User saved to database:", newUser._id);
 
-    // Generate token
+    // Ensure JWT secret exists
+    if (!process.env.JWT_SECRET) {
+      console.error("❌ JWT_SECRET is missing from .env file");
+      return res.status(500).json({ message: "Server configuration error" });
+    }
+
+    // Generate JWT token
     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    console.log("✅ JWT token generated");
 
-    res.status(201).json({ message: "User registered successfully", token, user: newUser });
+    // Send response (omit password for security)
+    res.status(201).json({
+      message: "User registered successfully",
+      token,
+      user: { _id: newUser._id, username, email },
+    });
 
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
+    console.error("❌ Signup error:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 

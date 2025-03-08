@@ -10,22 +10,21 @@ export default function Login() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-  }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+    
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
   
     try {
+      console.log(JSON.stringify({ username: fullName, email, password }));
+      console.log(fullName);
       const response = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName, email, password }),
+        body: JSON.stringify({ username: fullName, email, password }), // 👈 Add username
       });
   
       const data = await response.json();
