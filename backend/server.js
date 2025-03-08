@@ -40,6 +40,9 @@ app.use('/api/auth', auth);
 app.use('/api/session', session);
 app.use('/', User);
 
+import loyaltyRoutes from "./routes/loyalty";
+app.use("/api/loyalty", loyaltyRoutes);
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong!' });

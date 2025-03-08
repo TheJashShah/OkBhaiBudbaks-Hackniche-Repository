@@ -222,6 +222,17 @@ export const products: Product[] = [
 
 
 const Dashboard = () => {
+   const [loyaltyPoints, setLoyaltyPoints] = useState<number>(0);
+   const handleProductClick = () => {
+
+    // Increase loyalty points
+    setLoyaltyPoints((prevPoints) => {
+      const newPoints = prevPoints + 10; // Each click gives 10 points
+      localStorage.setItem("loyaltyPoints", newPoints.toString()); // Save to localStorage
+      return newPoints;
+    });
+    
+  };
 
   const [extraFilter,setExtraFilter] = useState('');
   const [activeTab, setActiveTab] = useState('explore');
@@ -393,6 +404,8 @@ const Dashboard = () => {
       onChange={(e) => setExtraFilter(e.target.value)}
     />
     </div>
+    <button className="px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105">
+      Search</button>
   </div>
 
   {/* Icons */}
@@ -471,6 +484,7 @@ const Dashboard = () => {
                     <Link to={`/product/${product.id}`} key={product.id} className="group">
                       <Card
                         variant="outlined"
+                        onClick={() => handleProductClick()}
                         className="h-full transition-all duration-200 hover:shadow-md group-hover:border-blue-300"
                         sx={{
                           display: 'flex',
@@ -596,7 +610,7 @@ const Dashboard = () => {
                           <Typography level="title-lg" className="font-bold text-blue-600">
                             ${product.price.toFixed(2)}
                           </Typography>
-                          <button className="flex-1 my-4 bg-blue-600 text-white py-4 px-5 rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-center">Add to Cart</button>
+                          <button className="flex-1 my-4 bg-blue-600 text-white py-3 px-5 rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-center">Add to Cart</button>
                         </Box>
                       </Card>
                       

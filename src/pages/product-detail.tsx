@@ -175,7 +175,7 @@ const ProductDetail = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
             {/* Product Images */}
             <div className="space-y-4">
-              <AspectRatio ratio="1.2" sx={{ width: "100%", borderRadius: "8px", overflow: "hidden" }}>
+              <AspectRatio ratio="1.1" sx={{ width: "100%", borderRadius: "8px", overflow: "hidden" }}>
                 <img
                   src={productImages[activeImage] || "/placeholder.svg"}
                   alt={product.title}
