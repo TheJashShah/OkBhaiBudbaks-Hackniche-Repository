@@ -4,7 +4,7 @@ export default function LearnMore() {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <a href="/" className="text-2xl font-bold text-blue-600">ShopMart</a>
-          <a href="/dashboard" className="text-lg font-semibold text-indigo-600 hover:underline">
+          <a href="/dashboard" className="text-lg font-semibold text-blue-600 hover:underline">
             Start Shopping →
           </a>
         </div>
