@@ -48,7 +48,7 @@ def top_products():
         if(data['rating'][i] >= 4.5 and data['rating_count'][i] >=data['rating_count'].median()):
            
            if data['product_id'][i] not in seen:
-            list.append({'Name' : data['product_name'][i], 'ID' : data['product_id'][i], 'Rating' : data['rating'][i]})
+            list.append({'Name' : data['product_name'][i], 'ID' : data['product_id'][i], 'Rating' : data['rating'][i], 'image' : data['img_link'][i]})
             seen.add(data['product_id'][i])
 
     return list
@@ -88,7 +88,7 @@ def find_similar_products(id):
 
     for idx, num in enumerate(array):
         if num >= 0.7:
-            similar_products.append({'Name' : data['product_name'][idx], 'ID' : data['product_id'][idx], 'similarity': num})
+            similar_products.append({'Name' : data['product_name'][idx], 'ID' : data['product_id'][idx], 'similarity': num, 'image' : data['img_link'][idx]})
 
     return similar_products
 
@@ -127,7 +127,7 @@ def find_by_keyword(keyword, top):
 
     result = []
     for _, row in top_matches.iterrows():
-        result.append({'Name' : row['product_name'], 'ID' : row['product_id'], 'Rating' : row['rating']})
+        result.append({'Name' : row['product_name'], 'ID' : row['product_id'], 'Rating' : row['rating'], 'image' : row['img_link']})
 
     return result
 
