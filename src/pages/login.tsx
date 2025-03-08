@@ -1,8 +1,9 @@
 import React from "react";
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate} from "react-router-dom"
 
 export default function Signup() {
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ export default function Signup() {
     setError("");
     setLoading(true);
     
-    console.log("🔹 Sending login request:", { email, password, rememberMe });
+    console.log("Sending login request:", { email, password, rememberMe });
 
     try {
       const response = await fetch("http://localhost:3000/api/auth/login", {
@@ -28,11 +29,11 @@ export default function Signup() {
       const data = await response.json();
       
       if (!response.ok) {
-        console.log("❌ Login failed:", data.message);
+        console.log("Login failed:", data.message);
         throw new Error(data.message || "Login failed");
       }
 
-      console.log("✅ Login successful:", data);
+      console.log("Login successful:", data);
       alert("Login successful!");
 
       // Save token (if rememberMe is checked)
@@ -41,13 +42,14 @@ export default function Signup() {
       } else {
         sessionStorage.setItem("token", data.token);
       }
+      navigate("/userdetails");
 
     } catch (err: any) {
-      console.error("🚨 Login error:", err.message);
+      console.error("Login error:", err.message);
       setError(err.message);
     } finally {
       setLoading(false);
-    }
+    }   
   };
 
 
@@ -155,7 +157,7 @@ export default function Signup() {
                 <button
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center" onClick={handleSubmit}>
-                  Login
+                    Login                 
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 ml-2"

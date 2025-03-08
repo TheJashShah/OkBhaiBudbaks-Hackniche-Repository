@@ -394,23 +394,14 @@ const Dashboard = () => {
         className="h-6 w-6 text-gray-600"
         fill="none"
         viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
+        stroke="currentColor">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={2}
-          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-        />
+          d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
       </svg>
-      <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
-        3
-      </span>
     </button>
-
-    <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium">
-      JD
-    </div>
   </div>
 </div>
 
@@ -525,7 +516,6 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* Main content based on active tab */}
           {activeTab === 'explore' && !searchQuery && (
             <>
               {/* Featured section */}
@@ -533,8 +523,7 @@ const Dashboard = () => {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-800">Featured Products</h3>
                   <Link to="/category/featured" className="text-sm text-blue-600 hover:underline">View all</Link>
-                </div>
-                
+                </div>     
                 <Box
                   sx={{
                     display: 'flex',
@@ -553,8 +542,7 @@ const Dashboard = () => {
                       borderRadius: '10px',
                     },
                   }}
-                  className="pb-4"
-                >
+                  className="pb-4">
                   {featuredProducts.map((product) => (
                     <Link to={`/product/${product.id}`} key={product.id} className="group">
                       <Card
@@ -573,14 +561,12 @@ const Dashboard = () => {
                             boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                           },
                         }}
-                        className="h-full transition-all duration-200 hover:shadow-md group-hover:border-blue-300"
-                      >
+                        className="h-full transition-all duration-200 hover:shadow-md group-hover:border-blue-300">
                         <AspectRatio ratio="1" sx={{ width: '100%' }}>
                           <img
                             src={product.image || "/placeholder.svg"}
                             alt={product.title}
-                            className="object-contain p-4"
-                          />
+                            className="object-contain p-4"/>
                         </AspectRatio>
                         <Box sx={{ p: 2 }}>
                           <Typography level="title-md" className="line-clamp-1 group-hover:text-blue-600 transition-colors">
@@ -593,8 +579,7 @@ const Dashboard = () => {
                                 xmlns="http://www.w3.org/2000/svg" 
                                 className={`h-4 w-4 ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`} 
                                 viewBox="0 0 20 20" 
-                                fill="currentColor"
-                              >
+                                fill="currentColor">
                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                               </svg>
                             ))}
@@ -617,7 +602,6 @@ const Dashboard = () => {
                     <Link to={`/category/${category.toLowerCase()}`} key={index} className="group">
                       <div className="bg-white rounded-lg border border-gray-200 p-4 text-center transition-all hover:shadow-md hover:border-blue-300 h-full flex flex-col items-center justify-center">
                         <div className="w-12 h-12 mb-3 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                          {/* Simple category icon */}
                           {index === 0 && (
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />

@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import auth from "./routes/auth.js";
+import User from "./routes/user.js";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 
 app.use('/api/auth', auth);
+app.use('/', User);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
