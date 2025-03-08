@@ -27,9 +27,8 @@ export default function Checkout() {
         <h1 className="text-3xl font-bold text-gray-900 mb-6">Checkout</h1>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Billing & Shipping Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            <h2 className="text-xl font-semibold text-gray-800">Billing & Shipping Details</h2>
+            <h2 className="text-xl font-semibold text-gray-800">Shipping Details</h2>
             
             <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange}
               className="w-full p-3 border rounded-md focus:ring-2 focus:ring-indigo-500" required />

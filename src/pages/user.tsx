@@ -12,7 +12,6 @@ interface Recommendation {
   id: number;
   name: string;
   price: number;
-  image: string;
 }
 
 export default function Dashboard() {
@@ -22,11 +21,13 @@ export default function Dashboard() {
   const recentOrders: Order[] = [
     { id: 1, item: "Wireless Headphones", price: 49.99, status: "Delivered", date: "March 5, 2025" },
     { id: 2, item: "Smart Watch", price: 89.99, status: "Shipped", date: "March 6, 2025" },
+    { id: 3, item: "Smart Watch", price: 89.99, status: "Shipped", date: "March 6, 2025" },
+    { id: 4, item: "Smart Watch", price: 79.99, status: "Shipped", date: "March 6, 2025" },
   ];
 
   const recommendations: Recommendation[] = [
-    { id: 1, name: "Bluetooth Speaker", price: 39.99, image: "https://via.placeholder.com/100" },
-    { id: 2, name: "Gaming Mouse", price: 29.99, image: "https://via.placeholder.com/100" },
+    { id: 1, name: "Bluetooth Speaker", price: 39.99 },
+    { id: 2, name: "Gaming Mouse", price: 29.99},
   ];
 
   return (

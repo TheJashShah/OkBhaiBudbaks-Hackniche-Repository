@@ -67,14 +67,12 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
         <div className="bg-white p-4 h-30 md:w-[85vw] w-[70vw] flex flex-col items-center md:flex-row md:h-20 md:justify-between">
           <div className="w-full flex justify-between flex-col md:flex-row">
             <h2 className="text-xl font-bold text-center m-auto md-m-auto md:ml-0 md:text-left">Explore</h2>
             <input
               className="w-[200px] md:w-full max-w-xs h-10 rounded-full m-auto md:m-0 md:ml-auto md:mt-0 mt-2 bg-gradient-to-br from-blue-50 to-slate-100 text-center"
-              placeholder="Search..."
-            />
+              placeholder="Search..."/>
           </div>
         </div>
 
