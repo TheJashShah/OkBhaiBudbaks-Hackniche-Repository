@@ -227,26 +227,31 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('explore');
   const [searchQuery, setSearchQuery] = useState('');
   const [popular, setPopular] = useState<any[]>([]);
-  useEffect(() => 
-  {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:5000/topproducts");
-      
-        if (response.data && Array.isArray(response.data["top-products"])) {
-          console.log("✅ API Response:", response.data["top-products"]);
-          setPopular(response.data["top-products"]); // Extract the correct array
+        if (response.data && typeof response.data === "string") {
+          const parsedData = JSON.parse(response.data); 
+          if (parsedData["top-products"] && Array.isArray(parsedData["top-products"])) {
+            console.log("✅ API Response:", parsedData["top-products"]);
+            setPopular(parsedData["top-products"]); // Set the 'top-products' array
+          } else {
+            console.warn("⚠️ 'top-products' is missing or not an array.");
+            setPopular([]); // Default to empty array
+          }
         } else {
-          console.warn("⚠️ Unexpected API response format:", response.data);
-          setPopular([]); // Default to an empty array if unexpected format
+          console.warn("⚠️ Unexpected API response format.");
+          setPopular([]); // Default to empty array
         }
       } catch (error) {
         console.error("❌ Error fetching data:", error);
+        setPopular([]); // Ensure that the state is reset on error
       }
-      
-    }
+    };
+
     fetchData();
-  },[]);
+  }, []);
   // Filter products based on search query
   const filteredProducts = products.filter(product => 
     product.title.toLowerCase().includes(searchQuery.toLowerCase())

@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence
-
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app)
 @app.route("/searchkeyword", methods=["POST"])
 def search():
 
