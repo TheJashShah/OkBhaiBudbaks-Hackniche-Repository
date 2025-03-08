@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import axios from "axios";
 
 interface CartItem {
   id: number;
@@ -8,21 +9,37 @@ interface CartItem {
 }
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      price: 49.99,
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "Smart Watch",
-      price: 89.99,
-      quantity: 1,
-    },
-  ]);
 
+  const [cartItems, setCartItems] = useState<any[]>([]);  // Initialize cartItems as an empty array
+
+  // Fetch data from API and set items in cart
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/session/get-cart'); // API endpoint
+        console.log(response.data); // Check the structure of the response
+  
+        // Access the cart array from response.data
+        const cartItems = response.data.cart; // response.data.cart contains the array of cart items
+  
+        // Map the cart items and format them
+        const formattedData: CartItem[] = cartItems.map((item:any, index:any) => ({
+          id: index + 1, // Auto-increment id starting from 1
+          name: item.name,
+          price: parseFloat(item.price), // Assuming price is a string or number
+          quantity: 1, // Always set quantity to 1
+        }));
+  
+        setCartItems(formattedData); // Update the state with the formatted data
+      } catch (error) {
+        console.error('Error fetching cart items:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);   // Empty dependency array to run the effect once after the component mounts
+
+  // Update item quantity
   const updateQuantity = (id: number, amount: number) => {
     setCartItems((items) =>
       items
@@ -32,7 +49,11 @@ export default function Cart() {
         .filter((item) => item.quantity > 0)
     );
   };
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+
+  // Calculate subtotal
+  const subtotal = cartItems
+    .reduce((acc, item) => acc + item.price * item.quantity, 0)
+    .toFixed(2);
 
   return (
     <div className="bg-gray-50 min-h-screen">
