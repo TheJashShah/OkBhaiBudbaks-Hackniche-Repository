@@ -10,6 +10,9 @@ export default function Login() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+  }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   
