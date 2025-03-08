@@ -1,12 +1,10 @@
 from flask import Flask, request, jsonify
-from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products
-from flask_cors import CORS, cross_origin
+from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence
 
 app = Flask(__name__)
-CORS(app) 
 
 @app.route("/searchkeyword", methods=["POST"])
-def search(): 
+def search():
 
     try:
         data = request.get_json()
@@ -18,6 +16,22 @@ def search():
         prediction = find_by_keyword(keyword, top=5)
 
         return jsonify({"search" : prediction})
+    
+    except Exception as e:
+        return jsonify({"error" : str(e)}), 500
+
+@app.route("/searchquery", methods=["POST"])
+def query():
+
+    try:
+        data = request.get_json()
+        sentence = data.get("sentence")
+
+        if sentence is None:
+            return jsonify({"error" : "Missing 'keyword' key in request"}), 400
+        
+        result = find_by_sentence(sentence, top=10)
+        return jsonify({"search" : result})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
