@@ -6,7 +6,8 @@ from sklearn.preprocessing import MinMaxScaler
 import re
 
 from sklearn.metrics.pairwise import cosine_similarity
-import json
+import random
+from language_querying import string_to_tokens
 
 '''
 Index(['product_id', 'product_name', 'category', 'discounted_price',
@@ -16,7 +17,7 @@ Index(['product_id', 'product_name', 'category', 'discounted_price',
       dtype='object')
 '''
 
-data = pd.read_csv('amazon.csv')
+data = pd.read_csv('try.csv')
 
 # print(data.columns)
 def clean_text(text):
@@ -37,6 +38,8 @@ data['actual_price'] = data['actual_price'].apply(convert_float)
 data['rating'] = pd.to_numeric(data['rating'], errors='coerce')
 data['rating_count'] = data['rating_count'].str.replace(",", "").astype(float)
 data['discount_percentage'] = data['discount_percentage'].apply(convert_float)
+
+data['rating'] = data['rating'].apply(lambda x: random.uniform(2.4, 4.7) if pd.isna(x) else x)
 
 def top_products():
 
@@ -127,9 +130,33 @@ def find_by_keyword(keyword, top):
 
     result = []
     for _, row in top_matches.iterrows():
-        result.append({'Name' : row['product_name'], 'ID' : row['product_id'], 'Rating' : row['rating'], 'image' : row['img_link']})
+        result.append({'Name' : row['product_name'], 'ID' : row['product_id'], 'Rating' : row['rating'], 'image' : row['img_link'], 'price' : row['actual_price']})
 
     return result
+
+def find_by_sentence(sentence, top):
+    nouns, nums, condition = string_to_tokens(sentence)
+
+    all_results = []
+    for word in nouns:
+        results = find_by_keyword(word, top)
+        if isinstance(results, str):
+            continue
+        all_results.extend(results)
+
+    if not all_results:
+        return "No products found."
+
+    if condition == "above" and nums:
+        all_results = [item for item in all_results if item["price"] > nums[0]]
+    elif condition == "below" and nums:
+        all_results = [item for item in all_results if item["price"] < nums[0]]
+    elif condition == "range" and len(nums) == 2:
+        all_results = [item for item in all_results if nums[0] <= item["price"] <= nums[1]]
+
+    all_results.sort(key=lambda x: x["Rating"], reverse=True)
+
+    return all_results[:top] if all_results else "No products match the criteria."
 
 def find_for_keywords(keyword_list):
 
@@ -145,4 +172,4 @@ def find_for_keywords(keyword_list):
         
         return find_for_multiple(list(product_ids))
     
-find_for_keywords(['sandwich', 'screen'])
+print(find_by_sentence("Phone in range 20000 to 40000", 5))
