@@ -21,9 +21,7 @@ export default function LandingPage() {
           <div className="flex lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="text-gray-700 p-2 rounded-md"
-            >
-              ☰
+              className="text-gray-700 p-2 rounded-md">☰
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
@@ -47,8 +45,7 @@ export default function LandingPage() {
               <a href="/" className="text-xl font-bold text-indigo-600">
                 ShopMart
               </a>
-              <button onClick={() => setMobileMenuOpen(false)} className="text-gray-700 p-2">
-                ✕
+              <button onClick={() => setMobileMenuOpen(false)} className="text-gray-700 p-2">✕
               </button>
             </div>
             <div className="mt-6 space-y-4">
