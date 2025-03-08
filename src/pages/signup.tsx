@@ -1,38 +1,57 @@
-import React from "react";
+"use client"
+import React from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-export default function Signup() {
+export default function Login() {
+  const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle login logic here
-    console.log({ email, password, rememberMe })
+    
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-slate-100 p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md">    
         <div className="flex justify-center mb-8">
           <div className="flex items-center gap-2">
             <div className="bg-blue-600 p-2 rounded-lg">
+              {/* Logo */}
             </div>
             <h1 className="text-2xl font-bold text-slate-800">ShopMart</h1>
           </div>
         </div>
 
-        {/* Login Card */}
+        {/* Signup Card */}
         <div className="bg-white rounded-xl shadow-xl overflow-hidden">
           <div className="p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome back</h2>
-            <p className="text-gray-500 mb-6">Enter your credentials to access your account</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Create an account</h2>
+            <p className="text-gray-500 mb-6">Enter your information to get started with ShopMart</p>
 
             <form onSubmit={handleSubmit}>
               <div className="space-y-5">
+                {/* Full Name Field */}
+                <div>
+                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name
+                  </label>
+                  <input
+                    id="fullName"
+                    type="text"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    placeholder="Enter your name"
+                    required
+                  />
+                </div>
+
+                {/* Email Field */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Email
@@ -44,18 +63,15 @@ export default function Signup() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                     placeholder="name@example.com"
-                    required/>
+                    required
+                  />
                 </div>
 
+                {/* Password Field */}
                 <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                      Password
-                    </label>
-                    <a href="#" className="text-sm text-blue-600 hover:text-blue-800 hover:underline">
-                      Forgot password?
-                    </a>
-                  </div>
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                    Password
+                  </label>
                   <div className="relative">
                     <input
                       id="password"
@@ -64,11 +80,13 @@ export default function Signup() {
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                       placeholder="Enter your password"
-                      required/>
+                      required
+                    />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
                       {showPassword ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +96,8 @@ export default function Signup() {
                           stroke="currentColor"
                           strokeWidth="2"
                           strokeLinecap="round"
-                          strokeLinejoin="round">
+                          strokeLinejoin="round"
+                        >
                           <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
                           <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
                           <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
@@ -93,32 +112,37 @@ export default function Signup() {
                           stroke="currentColor"
                           strokeWidth="2"
                           strokeLinecap="round"
-                          strokeLinejoin="round">
+                          strokeLinejoin="round"
+                        >
                           <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                           <circle cx="12" cy="12" r="3"></circle>
                         </svg>
                       )}
                     </button>
                   </div>
+                  <p className="mt-1 text-xs text-gray-500">Password must be at least 8 characters long</p>
                 </div>
 
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={() => setRememberMe(!rememberMe)}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"/>
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                    Remember me
+                <div>
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                    Confirm Password
                   </label>
+                  <input
+                    id="confirmPassword"
+                    type={showPassword ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    placeholder="••••••••"
+                    required
+                  />
                 </div>
 
-                {/* Login Button */}
+                {/* Signup Button */}
                 <button
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
-                  Login
+                  Create Account
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 ml-2"
@@ -145,7 +169,7 @@ export default function Signup() {
               </div>
             </div>
 
-            {/* Google Login */}
+            {/* Social Signup */}
             <div className="grid gap-4">
               <button
                 type="button"
@@ -165,14 +189,15 @@ export default function Signup() {
                     fill="#EA4335"/>
                   <path d="M1 1h22v22H1z" fill="none" />
                 </svg>
-                Sign In with Google
+                Sign Up with Google
               </button>
             </div>
 
+            {/* Login Link */}
             <p className="text-center text-sm text-gray-600 mt-6">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-blue-600 hover:text-blue-800 hover:underline font-medium">
-                Sign up
+              Already have an account?{" "}
+              <Link to="/login" className="text-blue-600 hover:text-blue-800 hover:underline font-medium">
+                Log in
               </Link>
             </p>
           </div>
