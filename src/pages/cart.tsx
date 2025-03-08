@@ -73,7 +73,7 @@ export default function Cart() {
               </div>
             ))}
 
-            {/* Subtotal and Checkout */}
+            {/* Checkout */}
             <div className="flex justify-between items-center mt-6">
               <h2 className="text-xl font-semibold">Subtotal: ${subtotal}</h2>
               <a
@@ -89,7 +89,7 @@ export default function Cart() {
             <p className="mt-4 text-gray-500">Browse our collection and add items to your cart.</p>
             <a
               href="/shop"
-              className="mt-6 inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-indigo-500">
+              className="mt-6 inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-500">
               Shop Now
             </a>
           </div>

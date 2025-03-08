@@ -28,7 +28,6 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen w-screen">
-      {/* Sidebar */}
       <aside className="w-20 md:w-64 bg-white p-6 shadow-lg flex flex-col items-center md:items-start">
         <h1 className="text-xl font-bold text-blue-600 md:block hidden">
           Best<span className="text-black">BuyCo</span>
@@ -79,10 +78,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Product Grid - Hidden when "Popular Products" or "For You" is selected */}
         <div className="w-full h-full bg-gradient-to-br from-blue-50 to-slate-100">
-        {(activeTab === 'explore') && (
-          
+        {(activeTab === 'explore') && (      
             <Box
               sx={{
                 marginLeft: '10px',
@@ -117,8 +114,7 @@ const Dashboard = () => {
                       width: 120,
                       padding: 1,
                     },
-                  }}
-                >
+                  }}>
                   <AspectRatio
                     ratio="1"
                     sx={{
@@ -130,14 +126,12 @@ const Dashboard = () => {
                         height: 100,
                         p: 0.5,
                       },
-                    }}
-                  >
+                    }}>
                     <img
                       srcSet={`${item.src}?h=300&fit=crop&auto=format&dpr=2 2x`}
                       src={`${item.src}?h=300&fit=crop&auto=format`}
                       alt={item.title}
-                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                    />
+                      style={{ objectFit: 'cover', width: '100%', height: '100%' }}/>
                   </AspectRatio>
                   <Box sx={{ mt: 1, width: '100%' }}>
                     <Typography level="title-md">{item.title}</Typography>
