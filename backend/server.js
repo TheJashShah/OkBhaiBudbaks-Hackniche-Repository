@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import auth from "./routes/auth.js";
 
-dotenv.config({ path: './backend/.env' });
+dotenv.config();
 
 const app = express();
 
@@ -33,7 +33,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log('Connected to MongoDB'))
 .catch((err) => console.error('MongoDB connection error:', err));
 
-// ✅ Correctly register auth routes
+
 app.use('/api/auth', auth);
 
 app.use((err, req, res, next) => {
