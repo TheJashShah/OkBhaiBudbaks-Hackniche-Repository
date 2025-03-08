@@ -12,8 +12,7 @@ export default function Login() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle signup logic here
-    console.log({ fullName, email, password, confirmPassword})
+    
   }
 
   return (
