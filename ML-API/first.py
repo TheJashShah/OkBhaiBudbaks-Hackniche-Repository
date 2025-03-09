@@ -193,6 +193,3 @@ def url_to_products(url):
     
     word_list = caption_img(url)
     return find_for_keywords(word_list)
-    
-
-lightfm(['B07JW9H4J1'])
