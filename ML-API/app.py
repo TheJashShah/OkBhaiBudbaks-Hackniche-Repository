@@ -17,7 +17,7 @@ def search():
         
         prediction = find_by_keyword(keyword, top=5)
 
-        return jsonify({"search" : prediction})
+        return jsonify({"predict" : prediction})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
@@ -33,7 +33,7 @@ def query():
             return jsonify({"error" : "Missing 'keyword' key in request"}), 400
         
         result = find_by_sentence(sentence, top=10)
-        return jsonify({"search" : result})
+        return jsonify({"predict" : result})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
@@ -85,7 +85,7 @@ def img():
 
         list = url_to_products(img)
 
-        return jsonify({"products" : list})
+        return jsonify({"predict" : list})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500

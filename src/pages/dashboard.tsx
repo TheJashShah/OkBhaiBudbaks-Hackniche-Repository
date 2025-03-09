@@ -278,24 +278,25 @@ const Dashboard = () => {
   
       if (isUrl) {
         // Handle URL case
-        response = await axios.post("http://127.0.0.1:5000/imagesearch", { url: extraFilter });
-        parsedData = typeof response.data === 'string' 
+        const response = await axios.post("http://127.0.0.1:5000/imagesearch", { url: extraFilter });
+        const parsedData = typeof response.data === 'string' 
         ? JSON.parse(response.data.replace(/"image": NaN/g, '"image": "https://thumbs.dreamstime.com/b/image-not-available-icon-image-not-available-icon-set-default-missing-photo-stock-vector-symbol-black-filled-330249482.jpg"')) 
         : response.data;
-          setSearched(parsedData.products);
+          setSearched(parsedData.predict);
           console.log(searched);
       } else if (isSingleWord) {
         // Handle single keyword search
-        response = await axios.post("http://127.0.0.1:5000/searchkeyword", { keyword: extraFilter });
-        parsedData = typeof response.data === 'string' 
+        const response = await axios.post("http://127.0.0.1:5000/searchkeyword", { keyword: extraFilter });
+        const parsedData = typeof response.data === 'string' 
         ? JSON.parse(response.data.replace(/"image": NaN/g, '"image": "https://thumbs.dreamstime.com/b/image-not-available-icon-image-not-available-icon-set-default-missing-photo-stock-vector-symbol-black-filled-330249482.jpg"')) 
         : response.data;
           setSearched(parsedData.predict);
           console.log(searched);
       } else {
         // Handle sentence search
-        response = await axios.post("http://127.0.0.1:5000/searchquery", { sentence: extraFilter });
-        parsedData = typeof response.data === 'string' 
+        const response = await axios.post("http://127.0.0.1:5000/searchquery", { sentence: extraFilter });
+        console.log(response.data);
+        const parsedData = typeof response.data === 'string'
         ? JSON.parse(response.data.replace(/"image": NaN/g, '"image": "https://thumbs.dreamstime.com/b/image-not-available-icon-image-not-available-icon-set-default-missing-photo-stock-vector-symbol-black-filled-330249482.jpg"')) 
         : response.data;
           setSearched(parsedData.predict);
