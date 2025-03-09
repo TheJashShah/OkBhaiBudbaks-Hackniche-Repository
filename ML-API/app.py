@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify
-from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence
-from flask_cors import CORS
+from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence, lightfm, url_to_products
+from flask_cors import CORS # type: ignore
 
 app = Flask(__name__)
-
 CORS(app)
+
 @app.route("/searchkeyword", methods=["POST"])
 def search():
 
@@ -59,7 +59,6 @@ def recommend():
 def top():
 
     try:
-        print("here")
         top_list = top_products()
 
         if top_list is None:

@@ -10,7 +10,8 @@ import random
 from language_querying import string_to_tokens
 
 from image_caption import caption_img
-
+from lightfm import output
+import pickle
 '''
 Index(['product_id', 'product_name', 'category', 'discounted_price',
        'actual_price', 'discount_percentage', 'rating', 'rating_count',
@@ -171,9 +172,27 @@ def find_for_keywords(keyword_list):
             return "No matching products found for the given keywords."
         
         return find_for_multiple(list(product_ids))
-    
-def url_to_products(url):
 
+def lightfm(id_list):
+
+    with open("model.pkl", "rb") as file:
+        model = pickle.load(file)
+
+    with open("item_encoder.pkl", "rb") as file:
+        item_encoder = pickle.load(file)
+
+    recommendations = output(model, item_encoder, id_list)
+
+    name = []
+    for prod in recommendations:
+        name.append(data.query("product_id == @'prod'")['product_name'])
+
+    return name
+
+def url_to_products(url):
+    
     word_list = caption_img(url)
     return find_for_keywords(word_list)
     
+
+lightfm(['B07JW9H4J1'])
