@@ -20,6 +20,9 @@ Index(['product_id', 'product_name', 'category', 'discounted_price',
       dtype='object')
 '''
 
+def assign_image():
+    return random.choice(['https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6505/6505109_sd.jpg', 'https://i5.walmartimages.com/asr/31d23744-3a9f-4bc6-88cd-bda390bab17e.9b9212a7dd5d6be8175ff3645610dce4.jpeg', 'https://image.oppo.com/content/dam/oppo/product-asset-library/a/a54/a54-overview-5/v1/assets/phone-type-img-1920.png'])
+
 data = pd.read_csv('final_updated.csv')
 
 # print(data.columns)
@@ -46,6 +49,11 @@ data['actual_price'] = data['actual_price'].replace(["", "nan", "NaN"], np.nan)
 data['actual_price'] = data['actual_price'].apply(
     lambda x: random.randint(5000, 45000) if pd.isna(x) else x
 )
+
+for i in range(2, 953):
+    data['img_link'] = assign_image()
+
+print(data['img_link'][2:953])
 
 def top_products():
 
@@ -84,8 +92,6 @@ for i in range(data.shape[0]):
 
     array = similarity_matrix[i].tolist()
     map[data['product_id'][i]] = array
-
-
 
 def find_similar_products(id):
 
