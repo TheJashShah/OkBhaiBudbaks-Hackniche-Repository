@@ -42,7 +42,7 @@ const AdminDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
             <div className="p-6 bg-white rounded-lg shadow-md">
               <p className="text-lg font-semibold text-gray-600">Total Sales</p>
-              <p className="text-2xl font-bold text-indigo-600">$32,500</p>
+              <p className="text-2xl font-bold text-indigo-600">₹32,500</p>
             </div>
             <div className="p-6 bg-white rounded-lg shadow-md">
               <p className="text-lg font-semibold text-gray-600">Orders</p>
@@ -54,7 +54,7 @@ const AdminDashboard = () => {
             </div>
             <div className="p-6 bg-white rounded-lg shadow-md">
               <p className="text-lg font-semibold text-gray-600">Revenue</p>
-              <p className="text-2xl font-bold text-indigo-600">$120,000</p>
+              <p className="text-2xl font-bold text-indigo-600">₹120,000</p>
             </div>
           </div>
         )}

@@ -435,7 +435,7 @@ const Dashboard = () => {
               <span className="hidden md:block">Cart</span>
             </Link>
             
-            <Link to="/profile" className="w-full p-3 rounded-lg flex items-center justify-center md:justify-start font-medium text-gray-700 hover:bg-gray-100 mt-2">
+            <Link to="/user" className="w-full p-3 rounded-lg flex items-center justify-center md:justify-start font-medium text-gray-700 hover:bg-gray-100 mt-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
@@ -445,7 +445,7 @@ const Dashboard = () => {
         </nav>
         
         <div className="mt-auto mb-4 w-full hidden md:block">
-          <Link to="/settings" className="w-full p-3 rounded-lg flex items-center font-medium text-gray-700 hover:bg-gray-100">
+          <Link to="#" className="w-full p-3 rounded-lg flex items-center font-medium text-gray-700 hover:bg-gray-100">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -762,7 +762,7 @@ const Dashboard = () => {
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-800">New Arrivals</h3>
-                  <Link to="/category/new" className="text-sm text-blue-600 hover:underline">View all</Link>
+                  <Link to="#" className="text-sm text-blue-600 hover:underline">View all</Link>
                 </div>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
