@@ -6,7 +6,6 @@ import Hero from './pages/hero'
 import Learn from './pages/learn-more'
 import Cart from './pages/cart'
 import User from './pages/user'
-import Checkout from './pages/checkout'
 import ProductDetail from "./pages/product-detail"
 import { CartProvider } from "./context/cartContext"
 
@@ -25,7 +24,6 @@ function App() {
            <Route path="/product/:id" element={<ProductDetail />} />
            <Route path="/cart" element={<Cart />} />
            <Route path="/user" element={<User />} />
-           <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </Router>
       </CartProvider>
