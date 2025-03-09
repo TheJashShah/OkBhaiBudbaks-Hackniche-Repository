@@ -268,8 +268,7 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
-  const handleSearch = async() => 
-  {
+  const handleSearch = async () => {
     const isSingleWord = extraFilter.trim().split(/\s+/).length === 1;
     try {
       if (isSingleWord) {
@@ -358,9 +357,6 @@ const Dashboard = () => {
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Get featured products (first 6)
-  const featuredProducts = products.slice(0, 6);
-  
   // Get recommended products (could be based on user preferences, using random for demo)
   const recommendedProducts = [...products].sort(() => 0.5 - Math.random()).slice(0, 6);
 
@@ -630,7 +626,7 @@ const Dashboard = () => {
                           </Typography>
                           <div className="mt-auto">
                             <Typography level="title-lg" className="font-bold text-blue-600">
-                              ${product.price.toFixed(2)}
+                              ₹{product.price.toFixed(2)}
                             </Typography>
                           </div>
                         </Box>
@@ -695,7 +691,7 @@ const Dashboard = () => {
                         </AspectRatio>
                         <Box sx={{ p: 2 }}>
                           <Typography level="title-md" className="line-clamp-1 group-hover:text-blue-600 transition-colors">
-                            {product.title}
+                            {product.Name}
                           </Typography>
                           <div className="flex items-center my-1">
                             {[...Array(5)].map((_, i) => (
@@ -709,9 +705,6 @@ const Dashboard = () => {
                               </svg>
                             ))}
                           </div>
-                          <Typography level="title-lg" className="font-bold text-blue-600">
-                            ${product.price.toFixed(2)}
-                          </Typography>
                           <button className="flex-1 my-4 bg-blue-600 text-white py-3 px-5 rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-center" onClick={async () => await handleAddToCart(product.Name, product.price)}>Add to Cart</button>
                         </Box>
                       </Card>
@@ -818,9 +811,6 @@ const Dashboard = () => {
                             {product.category}
                           </Typography>
                           <div className="mt-auto flex items-center justify-between">
-                            <Typography level="title-lg" className="font-bold text-blue-600">
-                              ${product.price.toFixed(2)}
-                            </Typography>
                             <button className="p-1.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

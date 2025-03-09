@@ -23,7 +23,7 @@ router.post('/start-session', (req, res) => {
 router.post('/add-cart', (req, res) => {
   const { name, price } = req.body;
   if (name && price) {
-    const item = { name, price };
+    const item = { name, price, ID };
     cart.push(item); // Add the item to the cart
     console.log(`Item added to cart: ${JSON.stringify(item)}`);
     res.status(200).send({ message: 'Item added to cart', cart });

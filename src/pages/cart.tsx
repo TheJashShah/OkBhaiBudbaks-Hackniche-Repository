@@ -100,7 +100,7 @@ export default function Cart() {
               <a
                 href="/checkout"
                 className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-500">
-                Proceed to Checkout →
+                Buy
               </a>
             </div>
           </div>

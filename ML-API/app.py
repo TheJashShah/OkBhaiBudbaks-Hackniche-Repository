@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify
-from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence
-from flask_cors import CORS
+from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence, lightfm, url_to_products
+from flask_cors import CORS # type: ignore
 
 app = Flask(__name__)
-
 CORS(app)
+
 @app.route("/searchkeyword", methods=["POST"])
 def search():
 
@@ -43,12 +43,16 @@ def recommend():
 
     try:
         data = request.get_json()
-        keyword_list = data.get("keywords")
+        intial_list = data.get("ids")
 
-        if keyword_list is None:
-            return jsonify({"error" : "Missing 'keyword_list' key in request"}), 400
+        id_list = []
+        for object in intial_list:
+            id_list.append(object["ID"])
+
+        if id_list is None:
+            return jsonify({"error" : "Missing 'initial_list' key in request"}), 400
         
-        prediction = find_for_keywords(list(keyword_list))
+        prediction = find_for_keywords(list(id_list))
 
         return jsonify({"recommendation" : prediction})
 
@@ -59,7 +63,6 @@ def recommend():
 def top():
 
     try:
-        print("here")
         top_list = top_products()
 
         if top_list is None:
@@ -82,7 +85,7 @@ def img():
 
         list = url_to_products(img)
 
-        return jsonify({"products" : list})
+        return jsonify({"predict" : list})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
