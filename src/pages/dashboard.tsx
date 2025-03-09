@@ -274,13 +274,11 @@ const Dashboard = () => {
     try {
       if (isSingleWord) {
         const response = await axios.post("http://127.0.0.1:5000/searchkeyword", {
-<<<<<<< Updated upstream
           keyword: extraFilter,
         });
     
         let parsedData;
         if (typeof response.data === 'string') {
-          // Replace `NaN` with `null` in the JSON string
           const sanitizedJson = response.data.replace(/"image": NaN/g, '"image": null');
           parsedData = JSON.parse(sanitizedJson);
         } else {
@@ -312,22 +310,6 @@ const Dashboard = () => {
     } catch (error: any) {
       console.error('Error:', error.response ? error.response.data : error.message);
     }
-=======
-          keyword: extraFilter, // Sending the extraFilter as the keyword
-        });
-        setSearched(response.data); 
-        console.log(searched);
-      } else {
-        const response = await axios.post("http://127.0.0.1:5000/searchquery", {
-          sentence: extraFilter, // Sending the extraFilter as the sentence
-        });
-        setSearched(response.data); 
-        console.log(searched);
-      }
-    } catch (error: any) {
-      console.error('Error:', error.response ? error.response.data : error.message);
-    }        
->>>>>>> Stashed changes
   }
   const handleAddToCart = async (name: string, price: number) => {
     console.log(`Adding to cart: ${name} - $${price}`);
@@ -524,8 +506,9 @@ const Dashboard = () => {
       onChange={(e) => setExtraFilter(e.target.value)}
     />
     </div>
-    <button className="px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-300 ease-in-out transform cursor-pointer hover:scale-105 " onClick={handleSearch}>
-      Search</button>
+    <button className="px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-100 ease-in-out transform active:scale-95" onClick={handleSearch}>
+      Search
+    </button>
   </div>
 
   {/* Icons */}

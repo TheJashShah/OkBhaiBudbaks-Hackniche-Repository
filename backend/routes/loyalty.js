@@ -1,8 +1,7 @@
 import express from "express";
 const router = express.Router();
-import User from "../models/loyalty"; 
+import User from "../models/Loyalty.js"; 
 
-// Update loyalty points using email
 router.post("/update-loyalty", async (req, res) => {
     try {
         const { email, points } = req.body;
@@ -10,8 +9,6 @@ router.post("/update-loyalty", async (req, res) => {
         if (!email || !points) {
             return res.status(400).json({ message: "Missing email or points" });
         }
-
-        // Find user by email
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: "User not found" });

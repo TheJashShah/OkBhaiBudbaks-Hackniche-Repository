@@ -9,39 +9,37 @@ const router = express.Router();
 router.post("/signup", async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    console.log("🔹 Received signup request:", { username, email });
+    console.log("Received signup request:", { username, email });
 
     // Validate input
     if (!username || !email || !password) {
-      console.log("⚠️ Missing required fields");
+      console.log("Missing required fields");
       return res.status(400).json({ message: "All fields are required" });
     }
 
     // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      console.log("⚠️ User already exists:", email);
+      console.log("User already exists:", email);
       return res.status(400).json({ message: "Email already registered" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("✅ Password hashed successfully");
+    console.log("Password hashed successfully");
 
-    // Create user
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
-    console.log("✅ User saved to database:", newUser._id);
+    console.log("User saved to database:", newUser._id);
 
     // Ensure JWT secret exists
     if (!process.env.JWT_SECRET) {
-      console.error("❌ JWT_SECRET is missing from .env file");
+      console.error("JWT_SECRET is missing from .env file");
       return res.status(500).json({ message: "Server configuration error" });
     }
 
     // Generate JWT token
     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-    console.log("✅ JWT token generated");
+    console.log("JWT token generated");
 
     // Send response (omit password for security)
     res.status(201).json({
@@ -51,7 +49,7 @@ router.post("/signup", async (req, res) => {
     });
 
   } catch (error) {
-    console.error("❌ Signup error:", error.message);
+    console.error("Signup error:", error.message);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
@@ -61,31 +59,30 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     console.log("🔹 Received login request:", { email });
 
-    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      console.log("❌ Login failed: User not found:", email);
+      console.log("Login failed: User not found:", email);
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      console.log("❌ Login failed: Incorrect password for:", email);
+      console.log("Login failed: Incorrect password for:", email);
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
     // Generate token
     if (!process.env.JWT_SECRET) {
-      throw new Error("⚠️ JWT_SECRET is missing from .env");
+      throw new Error("JWT_SECRET is missing from .env");
     }
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-    console.log("✅ Login successful:", email);
+    console.log("Login successful:", email);
 
     res.status(200).json({ message: "Login successful", token, user });
 
   } catch (error) {
-    console.error("🚨 Login error:", error);
+    console.error("Login error:", error);
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 });
