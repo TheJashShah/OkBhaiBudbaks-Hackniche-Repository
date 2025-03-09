@@ -137,7 +137,7 @@ def find_by_keyword(keyword, top):
 
     result = []
     for _, row in top_matches.iterrows():
-        result.append({'Name' : row['product_name'], 'ID' : row['product_id'], 'Rating' : row['rating'], 'image' : row['img_link'], 'price' : row['actual_price']})
+        result.append({'Name' : row['product_name'], 'ID' : row['product_id'], 'Rating' : row['rating'], 'image' : row['img_link'], 'actual price' : row['actual_price']})
 
     return result
 
