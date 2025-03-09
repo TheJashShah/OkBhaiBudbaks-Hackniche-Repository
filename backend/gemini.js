@@ -1,4 +1,5 @@
 import express from 'express';
+import "dotenv/config";
 import dotenv from 'dotenv'; 
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import cors from "cors";
@@ -26,6 +27,7 @@ async function generateContentFromModel(prompt) {
         const text = await response.text();
         return text;  
     } catch (error) {
+        console.log(process.env.GEMINI_API_KEY);
         console.error('Error generating content:', error);
         throw new Error('Failed to generate content');
     }

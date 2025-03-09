@@ -59,7 +59,7 @@ def name_to_ids(obj_list):
     id_list = []
 
     for obj in obj_list:
-        name_list.append(obj['Name'])
+        name_list.append(obj['name'])
 
     for name in name_list:
         id = data.query("product_name == @name")['product_id'].iloc[0]
