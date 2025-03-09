@@ -279,6 +279,7 @@ const Dashboard = () => {
       if (isUrl) {
         // Handle URL case
         const response = await axios.post("http://127.0.0.1:5000/imagesearch", { url: extraFilter });
+        console.log(response.data);
         const parsedData = typeof response.data === 'string' 
         ? JSON.parse(response.data.replace(/"image": NaN/g, '"image": "https://thumbs.dreamstime.com/b/image-not-available-icon-image-not-available-icon-set-default-missing-photo-stock-vector-symbol-black-filled-330249482.jpg"')) 
         : response.data;
@@ -287,6 +288,7 @@ const Dashboard = () => {
       } else if (isSingleWord) {
         // Handle single keyword search
         const response = await axios.post("http://127.0.0.1:5000/searchkeyword", { keyword: extraFilter });
+        console.log(response.data);
         const parsedData = typeof response.data === 'string' 
         ? JSON.parse(response.data.replace(/"image": NaN/g, '"image": "https://thumbs.dreamstime.com/b/image-not-available-icon-image-not-available-icon-set-default-missing-photo-stock-vector-symbol-black-filled-330249482.jpg"')) 
         : response.data;
@@ -470,7 +472,7 @@ const Dashboard = () => {
       <input
         type="text"
         className="w-full h-10 pl-12 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        placeholder="Search products..."
+        placeholder="Filter products..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
@@ -489,7 +491,8 @@ const Dashboard = () => {
         />
       </svg>
     </div>
-
+    <button className="px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-300 ease-in-out transform cursor-pointer hover:scale-105 " onClick={handleSearch}>
+    Search</button>
     {/* Additional Input */}
     <div className="relative flex-1">
     <input
@@ -500,8 +503,7 @@ const Dashboard = () => {
       onChange={(e) => setExtraFilter(e.target.value)}
     />
     </div>
-    <button className="px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-300 ease-in-out transform cursor-pointer hover:scale-105 " onClick={handleSearch}>
-      Search</button>
+    
   </div>
 
   {/* Icons */}
@@ -531,7 +533,7 @@ const Dashboard = () => {
       <input
         type="text"
         className="w-full h-10 pl-10 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        placeholder="Search products..."
+        placeholder="Filter products..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
@@ -550,7 +552,8 @@ const Dashboard = () => {
         />
       </svg>
     </div>
-
+    <button className="px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-300 ease-in-out transform cursor-pointer hover:scale-105 " onClick={handleSearch}>
+    Search</button>
     {/* Additional Input */}
     <input
       type="text"
@@ -702,7 +705,10 @@ const Dashboard = () => {
                               </svg>
                             ))}
                           </div>
-                          <button className="flex-1 my-4 bg-blue-600 text-white py-3 px-5 rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-center" onClick={async () => await handleAddToCart(product.Name, product.price)}>Add to Cart</button>
+                          <Typography level="title-md" className="line-clamp-1 group-hover:text-blue-600 transition-colors">
+                            ₹{product.actual_price}
+                          </Typography>
+                          <button className="flex-1 my-4 bg-blue-600 text-white py-3 px-5 rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-center" onClick={async () => await handleAddToCart(product.Name, product.actual_price)}>Add to Cart</button>
                         </Box>
                       </Card>
                   ))}

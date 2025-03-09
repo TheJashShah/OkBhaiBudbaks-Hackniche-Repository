@@ -101,7 +101,7 @@ def find_similar_products(id):
 
     for idx, num in enumerate(array):
         if num >= 0.7:
-            similar_products.append({'Name' : data['product_name'][idx], 'ID' : data['product_id'][idx], 'similarity': num, 'image' : data['img_link'][idx], 'actual price' : data['actual_price'][idx]})
+            similar_products.append({'Name' : data['product_name'][idx], 'ID' : data['product_id'][idx], 'similarity': num, 'image' : data['img_link'][idx], 'actual_price' : data['actual_price'][idx]})
 
     return similar_products
 
@@ -137,7 +137,7 @@ def find_by_keyword(keyword, top):
 
     result = []
     for _, row in top_matches.iterrows():
-        result.append({'Name' : row['product_name'], 'ID' : row['product_id'], 'Rating' : row['rating'], 'image' : row['img_link'], 'actual price' : row['actual_price']})
+        result.append({'Name' : row['product_name'], 'ID' : row['product_id'], 'Rating' : row['rating'], 'image' : row['img_link'], 'actual_price' : row['actual_price']})
 
     return result
 
