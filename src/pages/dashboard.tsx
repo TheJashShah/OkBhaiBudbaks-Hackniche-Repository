@@ -239,6 +239,7 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [popular, setPopular] = useState<any[]>([]);
   const [searched, setSearched] = useState<any[]>([]);
+  const [recommended,setRecommended] = useState<any[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -263,6 +264,31 @@ const Dashboard = () => {
       } catch (error) {
         console.error("❌ Error fetching data:", error);
         setPopular([]); // Ensure that the state is reset on error
+      }
+      try
+      {
+        interface CartItem {
+          name: string;
+          price: number;
+      }
+      
+      const response = await axios.get("http://localhost:3000/api/session/get-cart");
+      
+      // Extract the array from response
+      const items: CartItem[] = response.data.cart || [];
+      
+      // Send an array of JSON objects to the Python API
+      console.log(items)
+      await axios.post("http://localhost:5000/recommendproducts", { objects: items })
+    .then(res => {
+        console.log("Recommendation:", res.data);
+        setRecommended(res.data.recommendation); // ✅ Set state inside .then()
+    })
+    .catch(err => console.error("Error:", err));
+      }
+      catch (error)
+      {
+        console.error("❌ Error fetching data:", error);
       }
     };
 
@@ -302,7 +328,6 @@ const Dashboard = () => {
           // If response.data is already an object, use it directly
           parsedData = response.data;
         }
-    
         // Update the state
         setSearched(parsedData.predict);
       }
@@ -356,10 +381,6 @@ const Dashboard = () => {
   const filteredProducts = products.filter(product => 
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  // Get recommended products (could be based on user preferences, using random for demo)
-  const recommendedProducts = [...products].sort(() => 0.5 - Math.random()).slice(0, 6);
-
   return (
     
     <div className="flex h-screen w-screen overflow-hidden bg-gray-50">
@@ -891,7 +912,7 @@ const Dashboard = () => {
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Recommended For You</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {recommendedProducts.map((product) => (
+                {recommended.map((product) => (
                   <Link to={`/product/${product.id}`} key={product.id} className="group">
                     <Card
                       variant="outlined"
@@ -926,21 +947,21 @@ const Dashboard = () => {
                             <svg 
                               key={i} 
                               xmlns="http://www.w3.org/2000/svg" 
-                              className={`h-4 w-4 ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`} 
+                              className={`h-4 w-4 ${i < Math.floor(product.Rating) ? 'text-yellow-400' : 'text-gray-300'}`} 
                               viewBox="0 0 20 20" 
                               fill="currentColor"
                             >
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
                           ))}
-                          <span className="text-xs text-gray-500 ml-1">({product.rating})</span>
+                          <span className="text-xs text-gray-500 ml-1">({product.Rating})</span>
                         </div>
                         <Typography level="body-sm" className="text-gray-500 mb-2">
-                          {product.category}
+                          {product.Name}
                         </Typography>
                         <div className="mt-auto flex items-center justify-between">
                           <Typography level="title-lg" className="font-bold text-blue-600">
-                            ${product.price.toFixed(2)}
+                            ${product.actual_price.toFixed(2)}
                           </Typography>
                           <button className="p-1.5 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

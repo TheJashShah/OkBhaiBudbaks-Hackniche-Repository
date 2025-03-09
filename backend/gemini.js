@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv'; 
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import cors from "cors";
+const apiKey = process.env.GEMINI_API_KEY; 
 const check = dotenv.config({ path: './backend/.env' });
 const app = express();
 app.use(express.json());
@@ -17,7 +18,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
   }));
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(apiKey);
 async function generateContentFromModel(prompt) {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -26,6 +27,7 @@ async function generateContentFromModel(prompt) {
         const text = await response.text();
         return text;  
     } catch (error) {
+        console.log(process.env.VITE_GEMINI_API_KEY);
         console.error('Error generating content:', error);
         throw new Error('Failed to generate content');
     }
