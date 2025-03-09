@@ -17,7 +17,7 @@ def search():
         
         prediction = find_by_keyword(keyword, top=5)
 
-        return jsonify({"predict" : prediction})
+        return jsonify({"search" : prediction})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
@@ -33,7 +33,7 @@ def query():
             return jsonify({"error" : "Missing 'keyword' key in request"}), 400
         
         result = find_by_sentence(sentence, top=10)
-        return jsonify({"predict" : result})
+        return jsonify({"search" : result})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
@@ -43,12 +43,16 @@ def recommend():
 
     try:
         data = request.get_json()
-        keyword_list = data.get("keywords")
+        intial_list = data.get("ids")
 
-        if keyword_list is None:
-            return jsonify({"error" : "Missing 'keyword_list' key in request"}), 400
+        id_list = []
+        for object in intial_list:
+            id_list.append(object["ID"])
+
+        if id_list is None:
+            return jsonify({"error" : "Missing 'initial_list' key in request"}), 400
         
-        prediction = find_for_keywords(list(keyword_list))
+        prediction = find_for_keywords(list(id_list))
 
         return jsonify({"recommendation" : prediction})
 
