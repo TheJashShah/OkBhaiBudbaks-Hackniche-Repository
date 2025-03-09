@@ -53,7 +53,19 @@ data['actual_price'] = data['actual_price'].apply(
 for i in range(2, 953):
     data['img_link'] = assign_image()
 
-print(data['img_link'][2:953])
+def name_to_ids(obj_list):
+
+    name_list = []
+    id_list = []
+
+    for obj in obj_list:
+        name_list.append(obj['Name'])
+
+    for name in name_list:
+        id = data.query("product_name == @name")['product_id'].iloc[0]
+        id_list.append(id)
+
+    return id_list
 
 def top_products():
 
@@ -101,7 +113,7 @@ def find_similar_products(id):
 
     for idx, num in enumerate(array):
         if num >= 0.7:
-            similar_products.append({'Name' : data['product_name'][idx], 'ID' : data['product_id'][idx], 'similarity': num, 'image' : data['img_link'][idx], 'actual_price' : data['actual_price'][idx]})
+            similar_products.append({'Name' : data['product_name'][idx], 'ID' : data['product_id'][idx], 'similarity': num, 'image' : data['img_link'][idx], 'actual_price' : data['actual_price'][idx], 'Rating': data['rating'][idx]})
 
     return similar_products
 

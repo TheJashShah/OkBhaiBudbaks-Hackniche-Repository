@@ -10,34 +10,32 @@ interface CartItem {
 
 export default function Cart() {
 
-  const [cartItems, setCartItems] = useState<any[]>([]);  // Initialize cartItems as an empty array
+  const [cartItems, setCartItems] = useState<any[]>([]); 
 
   // Fetch data from API and set items in cart
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/session/get-cart'); // API endpoint
-        console.log(response.data); // Check the structure of the response
-  
-        // Access the cart array from response.data
-        const cartItems = response.data.cart; // response.data.cart contains the array of cart items
-  
-        // Map the cart items and format them
+        console.log(response.data); 
+
+        const cartItems = response.data.cart;
+
         const formattedData: CartItem[] = cartItems.map((item:any, index:any) => ({
-          id: index + 1, // Auto-increment id starting from 1
+          id: index + 1, 
           name: item.name,
-          price: parseFloat(item.price), // Assuming price is a string or number
-          quantity: 1, // Always set quantity to 1
+          price: parseFloat(item.price), 
+          quantity: 1, 
         }));
   
-        setCartItems(formattedData); // Update the state with the formatted data
+        setCartItems(formattedData);
       } catch (error) {
         console.error('Error fetching cart items:', error);
       }
     };
   
     fetchData();
-  }, []);   // Empty dependency array to run the effect once after the component mounts
+  }, []);   
 
   // Update item quantity
   const updateQuantity = (id: number, amount: number) => {
@@ -94,9 +92,8 @@ export default function Cart() {
               </div>
             ))}
 
-            {/* Checkout */}
             <div className="flex justify-between items-center mt-6">
-              <h2 className="text-xl font-semibold">Subtotal: ${subtotal}</h2>
+              <h2 className="text-xl font-semibold">Subtotal: ₹{subtotal}</h2>
               <a
                 href="/checkout"
                 className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-500">
@@ -109,7 +106,7 @@ export default function Cart() {
             <h2 className="text-2xl font-semibold text-gray-700">Your cart is empty</h2>
             <p className="mt-4 text-gray-500">Browse our collection and add items to your cart.</p>
             <a
-              href="/shop"
+              href="/dashboard"
               className="mt-6 inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-500">
               Shop Now
             </a>

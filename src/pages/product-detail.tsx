@@ -208,7 +208,7 @@ const ProductDetail = () => {
 
               <div className="border-t border-b border-gray-200 py-4">
                 <Typography level="title-lg" className="text-3xl font-bold text-blue-600">
-                  ${product.price.toFixed(2)}
+                ₹{product.price.toFixed(2)}
                 </Typography>
 
                 <div className="flex items-center mt-2">
@@ -379,7 +379,7 @@ const ProductDetail = () => {
                       </div>
                       <div className="mt-auto">
                         <Typography level="title-lg" className="font-bold text-blue-600">
-                          ${relatedProduct.price.toFixed(2)}
+                        ₹{relatedProduct.price.toFixed(2)}
                         </Typography>
                       </div>
                     </Box>

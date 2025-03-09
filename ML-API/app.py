@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence, lightfm, url_to_products
+from first import find_by_keyword, find_for_keywords, find_for_multiple, find_similar_products, top_products, find_by_sentence, lightfm, url_to_products, name_to_ids
 from flask_cors import CORS # type: ignore
 
 app = Flask(__name__)
@@ -17,7 +17,7 @@ def search():
         
         prediction = find_by_keyword(keyword, top=5)
 
-        return jsonify({"predict" : prediction})
+        return jsonify({"search" : prediction})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
@@ -33,7 +33,7 @@ def query():
             return jsonify({"error" : "Missing 'keyword' key in request"}), 400
         
         result = find_by_sentence(sentence, top=10)
-        return jsonify({"predict" : result})
+        return jsonify({"search" : result})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500
@@ -43,16 +43,14 @@ def recommend():
 
     try:
         data = request.get_json()
-        intial_list = data.get("ids")
+        initial_list = data.get("objects")
 
-        id_list = []
-        for object in intial_list:
-            id_list.append(object["ID"])
-
-        if id_list is None:
+        if initial_list is None:
             return jsonify({"error" : "Missing 'initial_list' key in request"}), 400
         
-        prediction = find_for_keywords(list(id_list))
+        id_list = name_to_ids(initial_list)
+        
+        prediction = find_for_multiple((id_list))
 
         return jsonify({"recommendation" : prediction})
 
@@ -85,7 +83,7 @@ def img():
 
         list = url_to_products(img)
 
-        return jsonify({"predict" : list})
+        return jsonify({"products" : list})
     
     except Exception as e:
         return jsonify({"error" : str(e)}), 500

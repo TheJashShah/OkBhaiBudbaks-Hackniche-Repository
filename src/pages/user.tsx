@@ -61,7 +61,7 @@ export default function Dashboard() {
                 <div key={order.id} className="border-b py-4 flex justify-between items-center">
                   <div>
                     <h4 className="text-lg font-semibold text-gray-800">{order.item}</h4>
-                    <p className="text-gray-600">${order.price.toFixed(2)} - {order.date}</p>
+                    <p className="text-gray-600">₹{order.price.toFixed(2)} - {order.date}</p>
                   </div>
                   <span
                     className={`px-4 py-1 rounded-md text-sm font-semibold ${
@@ -78,7 +78,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Recommendations */}
         <div className="mt-8">
           <h3 className="text-2xl font-semibold text-gray-900 mb-4">Recommended for You</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -86,7 +85,7 @@ export default function Dashboard() {
               <div key={item.id} className="bg-white p-4 rounded-lg shadow-md flex items-center space-x-4">
                 <div>
                   <h4 className="text-lg font-semibold text-gray-800">{item.name}</h4>
-                  <p className="text-gray-600">${item.price.toFixed(2)}</p>
+                  <p className="text-gray-600">₹{item.price.toFixed(2)}</p>
                 </div>
                 <a
                   href="/shop"
